@@ -1,1208 +1,138 @@
 ---
-const navItems = [
-  { label: "projects", href: "/projects" },
-  { label: "research", href: "/research" },
-  { label: "systems", href: "/systems" },
-  { label: "writing", href: "/writing" },
-];
+import BaseLayout from "../layouts/base.astro";
 
-const identityLink = { label: "about me", href: "/about" };
-
-const cards = [
+const focusAreas = [
   {
     label: "research",
     title: "computational aerospace",
     description:
-      "numerical methods, cfd, adaptive mesh refinement, combustion, and physical modeling.",
+      "Numerical methods, CFD, adaptive mesh refinement, propulsion, and verification workflows.",
     href: "/research",
-    cta: "explore research",
-    tone: "pink",
-    visual: "flow",
   },
   {
     label: "systems",
     title: "personal infrastructure",
     description:
-      "dns, tunnels, monitoring, linux servers, uptime, backups, and controlled chaos.",
+      "Cloudflare routing, monitoring, Linux services, backups, dashboards, and public status surfaces.",
     href: "/systems",
-    cta: "view systems",
-    tone: "blue",
-    visual: "servers",
   },
   {
     label: "writing",
     title: "technical notes",
     description:
-      "clean explanations of engineering, infrastructure, and things i had to suffer through at one point.",
+      "Readable notes on engineering, infrastructure, research tooling, and lessons learned while building.",
     href: "/writing",
-    cta: "read writing",
-    tone: "purple",
-    visual: "notes",
   },
 ];
 
-const buildItems = [
+const buildQueue = [
   {
-    title: "amrex finite-volume solver - thesis",
+    title: "AMReX finite-volume solver",
+    status: "active",
     description:
-      "adaptive finite-volume solver with block-structured amr, compressible flow, and mpi parallelization.",
-    status: "in progress",
-    href: "/projects/amrex-solver",
-    tone: "pink",
-    icon: "cube",
+      "A thesis-oriented solver path for conservation laws, AMR workflows, and propulsion-relevant physics.",
+    href: "/research",
   },
   {
-    title: "uptime kuma monitoring stack",
-    description:
-      "self-hosted monitoring, alerting, and status pages for public-facing systems.",
+    title: "urmom.systems monitoring stack",
     status: "live",
+    description:
+      "Public status, private telemetry, Cloudflare access, and uptime checks for exposed services.",
     href: "/systems",
-    tone: "green",
-    icon: "cloud",
   },
   {
-    title: "homelab node expansions",
+    title: "technical writing archive",
+    status: "drafting",
     description:
-      "more compute, more storage, more heat. because apparently that is the hobby.",
-    status: "planned",
-    href: "/projects/homelab",
-    tone: "blue",
-    icon: "server",
+      "A place for project notes, research summaries, setup writeups, and technical decisions worth keeping.",
+    href: "/writing",
   },
 ];
-
-const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark light" />
-    <meta
-      name="description"
-      content="personal site for aerospace engineering, numerical methods, infrastructure, and technical notes."
-    />
-    <title>urmom.systems</title>
+<BaseLayout
+  title="colin vargas · aerospace, compute, systems"
+  description="Personal site for Colin Vargas: aerospace engineering, numerical methods, infrastructure, projects, and technical notes."
+  active="home"
+>
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="home-hero-copy">
+      <p class="eyebrow">colin vargas / aerospace engineering</p>
+      <h1 id="home-title">engineering systems that mostly behave.</h1>
+      <p>
+        I work across computational fluid dynamics, numerical methods, propulsion,
+        and the infrastructure needed to keep projects visible, measurable, and
+        useful after the first demo.
+      </p>
 
-    <script is:inline>
-      (() => {
-        try {
-          const savedTheme = localStorage.getItem("theme");
-          const prefersLight = window.matchMedia(
-            "(prefers-color-scheme: light)",
-          ).matches;
-          const theme = savedTheme || (prefersLight ? "light" : "dark");
-
-          document.documentElement.dataset.theme = theme;
-        } catch {
-          document.documentElement.dataset.theme = "dark";
-        }
-      })();
-    </script>
-  </head>
-
-  <body>
-    <div class="page-shell">
-      <div class="background-glow" aria-hidden="true"></div>
-      <div class="grid-overlay" aria-hidden="true"></div>
-
-      <header class="site-header">
-        <a class="brand" href="/" aria-label="urmom.systems home">
-          urmom.systems
-        </a>
-
-        <div class="header-actions">
-          <nav aria-label="primary navigation">
-            {
-              navItems.map((item) => {
-                const itemPath = item.href.replace(/\/$/, "") || "/";
-                const isActive = currentPath === itemPath;
-
-                return (
-                  <a class={isActive ? "active" : undefined} href={item.href}>
-                    {item.label}
-                  </a>
-                );
-              })
-            }
-          </nav>
-
-          <button
-            class="theme-toggle"
-            type="button"
-            aria-label="switch color theme"
-            aria-pressed="false"
-            data-theme-toggle
-          >
-            <span class="theme-toggle-icon" aria-hidden="true"></span>
-            <span data-theme-label>light mode</span>
-          </button>
-        </div>
-      </header>
-
-      <main>
-        <section class="hero" aria-labelledby="hero-title">
-          <a class="identity-ribbon" href={identityLink.href} aria-label="about colin vargas">
-            <span class="identity-ribbon-main">
-              colin vargas | aerospace engineering
-            </span>
-
-            <span class="identity-ribbon-action">
-              {identityLink.label}
-              <span aria-hidden="true">→</span>
-            </span>
-          </a>
-
-          <h1 id="hero-title" class="hero-title">
-            <span>engineering</span>
-            <span>systems that</span>
-            <span>mostly behave.</span>
-          </h1>
-
-          <p class="hero-copy">
-            aerospace engineering, numerical methods, and infrastructure that
-            intersect at cfd, adaptive systems, and a personal flair reliable
-            enough to survive contact with reality.
-          </p>
-
-          <div class="hero-actions">
-            <a class="button primary" href="/projects">view projects</a>
-            <a class="button secondary" href="/research">research direction</a>
-          </div>
-        </section>
-
-        <section class="card-grid" aria-label="site sections">
-          {
-            cards.map((card) => (
-              <a class={`feature-card ${card.tone}`} href={card.href}>
-                <div>
-                  <p class="section-label">{card.label}</p>
-                  <h2>{card.title}</h2>
-                  <p>{card.description}</p>
-                </div>
-
-                <span class="card-link">
-                  <span aria-hidden="true">→</span>
-                  {card.cta}
-                </span>
-
-                <span class={`card-visual ${card.visual}`} aria-hidden="true">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-              </a>
-            ))
-          }
-        </section>
-
-        <section class="lower-grid" aria-label="current work and system status">
-          <aside class="queue-panel">
-            <p class="section-label blue">current build queue</p>
-            <h2>things worth clicking eventually</h2>
-
-            <p>
-              ongoing projects, experiments, and infrastructure that deserve to
-              see the light of day.
-            </p>
-
-            <a class="status-card" href="/systems">
-              <div class="status-topline">
-                <span>
-                  <span class="live-dot" aria-hidden="true"></span>
-                  public systems status
-                </span>
-                <strong>all systems nominal</strong>
-              </div>
-
-              <p>uptime kuma monitoring stack <span>online</span></p>
-            </a>
-          </aside>
-
-          <section class="build-list" aria-label="featured work">
-            {
-              buildItems.map((item) => (
-                <a class="build-item" href={item.href}>
-                  <div class={`build-icon ${item.tone}`} aria-hidden="true">
-                    {item.icon === "cube" && (
-                      <svg viewBox="0 0 24 24">
-                        <path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z"></path>
-                        <path d="m3 7 9 5 9-5"></path>
-                        <path d="M12 12v10"></path>
-                        <path d="m7.5 4.5 9 5"></path>
-                        <path d="m16.5 4.5-9 5"></path>
-                      </svg>
-                    )}
-
-                    {item.icon === "cloud" && (
-                      <svg viewBox="0 0 24 24">
-                        <path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.15 8.4 4.75 4.75 0 0 0 7 18Z"></path>
-                      </svg>
-                    )}
-
-                    {item.icon === "server" && (
-                      <svg viewBox="0 0 24 24">
-                        <rect x="4" y="4" width="16" height="6" rx="1.5"
-                        ></rect>
-                        <rect x="4" y="14" width="16" height="6" rx="1.5"
-                        ></rect>
-                        <path d="M8 7h.01"></path>
-                        <path d="M8 17h.01"></path>
-                        <path d="M12 7h6"></path>
-                        <path d="M12 17h6"></path>
-                      </svg>
-                    )}
-                  </div>
-
-                  <div class="build-copy">
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                  </div>
-
-                  <div class="build-meta">
-                    <span class={`status-badge ${item.tone}`}>
-                      {item.status}
-                    </span>
-                    <span class="chevron" aria-hidden="true">›</span>
-                  </div>
-                </a>
-              ))
-            }
-          </section>
-        </section>
-      </main>
+      <div class="button-row">
+        <a class="button primary" href="/projects">view projects</a>
+        <a class="button ghost" href="/research">research direction</a>
+      </div>
     </div>
 
-    <script is:inline>
-      (() => {
-        const root = document.documentElement;
-        const button = document.querySelector("[data-theme-toggle]");
-        const label = document.querySelector("[data-theme-label]");
-
-        const setTheme = (theme) => {
-          const nextTheme = theme === "light" ? "dark" : "light";
-
-          root.dataset.theme = theme;
-
-          if (label) {
-            label.textContent = `${nextTheme} mode`;
-          }
-
-          if (button) {
-            button.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
-            button.setAttribute("aria-label", `switch to ${nextTheme} mode`);
-          }
-        };
-
-        setTheme(root.dataset.theme || "dark");
-
-        button?.addEventListener("click", () => {
-          const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
-          setTheme(nextTheme);
-
-          try {
-            localStorage.setItem("theme", nextTheme);
-          } catch {}
-        });
-      })();
-    </script>
-  </body>
-</html>
-
-<style is:global>
-  :root,
-  html[data-theme="dark"] {
-    color-scheme: dark;
-
-    --bg: #050608;
-    --panel: rgba(18, 19, 24, 0.72);
-    --panel-hover: rgba(21, 23, 30, 0.84);
-    --panel-soft: rgba(255, 255, 255, 0.035);
-    --panel-soft-hover: rgba(255, 255, 255, 0.055);
-    --border: rgba(255, 255, 255, 0.1);
-    --border-strong: rgba(255, 255, 255, 0.18);
-    --text: rgba(255, 255, 255, 0.94);
-    --muted: rgba(255, 255, 255, 0.62);
-    --faint: rgba(255, 255, 255, 0.38);
-
-    --pink: #ff73b7;
-    --blue: #74b9ff;
-    --purple: #c77dff;
-    --green: #5ff2a0;
-
-    --glow-pink: rgba(255, 56, 146, 0.28);
-    --glow-blue: rgba(48, 137, 255, 0.22);
-    --glow-purple: rgba(139, 74, 255, 0.08);
-    --grid-line: rgba(255, 255, 255, 0.055);
-    --vignette: rgba(0, 0, 0, 0.44);
-
-    --button-primary-bg: #ffffff;
-    --button-primary-text: #08090d;
-    --button-secondary-bg: rgba(255, 255, 255, 0.045);
-    --button-secondary-bg-hover: rgba(255, 255, 255, 0.075);
-    --shadow: rgba(0, 0, 0, 0.26);
-    --inset-highlight: rgba(255, 255, 255, 0.04);
-    --theme-icon-glow: rgba(255, 255, 255, 0.42);
-  }
-
-  html[data-theme="light"] {
-    color-scheme: light;
-
-    --bg: #f7f2ea;
-    --panel: rgba(255, 255, 255, 0.7);
-    --panel-hover: rgba(255, 255, 255, 0.86);
-    --panel-soft: rgba(255, 255, 255, 0.45);
-    --panel-soft-hover: rgba(255, 255, 255, 0.68);
-    --border: rgba(20, 24, 32, 0.12);
-    --border-strong: rgba(20, 24, 32, 0.22);
-    --text: rgba(16, 18, 24, 0.94);
-    --muted: rgba(16, 18, 24, 0.64);
-    --faint: rgba(16, 18, 24, 0.42);
-
-    --pink: #c92f83;
-    --blue: #2266d8;
-    --purple: #7d3fc7;
-    --green: #128b58;
-
-    --glow-pink: rgba(255, 87, 170, 0.22);
-    --glow-blue: rgba(59, 130, 246, 0.18);
-    --glow-purple: rgba(125, 63, 199, 0.08);
-    --grid-line: rgba(18, 24, 38, 0.075);
-    --vignette: rgba(255, 255, 255, 0.28);
-
-    --button-primary-bg: #111318;
-    --button-primary-text: #ffffff;
-    --button-secondary-bg: rgba(17, 19, 24, 0.045);
-    --button-secondary-bg-hover: rgba(17, 19, 24, 0.075);
-    --shadow: rgba(18, 24, 38, 0.13);
-    --inset-highlight: rgba(255, 255, 255, 0.75);
-    --theme-icon-glow: rgba(201, 47, 131, 0.35);
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    background: var(--bg);
-    scroll-behavior: smooth;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family:
-      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-      "Segoe UI", sans-serif;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  button {
-    font: inherit;
-  }
-
-  .page-shell {
-    position: relative;
-    isolation: isolate;
-    min-height: 100vh;
-    overflow: hidden;
-    padding: 3rem clamp(1.25rem, 4vw, 4rem) 4rem;
-  }
-
-  .background-glow {
-    position: fixed;
-    inset: 0;
-    z-index: -3;
-    background:
-      radial-gradient(circle at 24% 18%, var(--glow-pink), transparent 34rem),
-      radial-gradient(circle at 68% 12%, var(--glow-blue), transparent 36rem),
-      radial-gradient(circle at 50% 70%, var(--glow-purple), transparent 36rem),
-      var(--bg);
-  }
-
-  .grid-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    opacity: 0.42;
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 4rem 4rem;
-    mask-image: linear-gradient(to bottom, black, black 70%, transparent);
-  }
-
-  .page-shell::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background:
-      linear-gradient(to bottom, transparent, var(--bg) 92%),
-      radial-gradient(circle at center, transparent 0, var(--vignette) 100%);
-    pointer-events: none;
-  }
-
-  .site-header,
-  main {
-    width: min(100%, 1220px);
-    margin-inline: auto;
-  }
-
-  .site-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    padding-bottom: 1.4rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .brand {
-    color: var(--text);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.95rem;
-    letter-spacing: 0.34em;
-    opacity: 0.92;
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: clamp(1rem, 2.5vw, 2rem);
-  }
-
-  nav {
-    display: flex;
-    align-items: center;
-    gap: clamp(1rem, 2.5vw, 2rem);
-    color: var(--muted);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.9rem;
-  }
-
-  nav a {
-    position: relative;
-    transition:
-      color 180ms ease,
-      opacity 180ms ease;
-  }
-
-  nav a:hover,
-  nav a.active {
-    color: var(--text);
-  }
-
-  nav a::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: -0.55rem;
-    left: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--blue), transparent);
-    opacity: 0;
-    transform: scaleX(0.5);
-    transition:
-      opacity 180ms ease,
-      transform 180ms ease;
-  }
-
-  nav a:hover::after,
-  nav a.active::after {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-
-  .theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    min-height: 2.2rem;
-    padding: 0.35rem 0.72rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: var(--button-secondary-bg);
-    color: var(--muted);
-    cursor: pointer;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.76rem;
-    text-transform: lowercase;
-    white-space: nowrap;
-    transition:
-      color 180ms ease,
-      border-color 180ms ease,
-      background 180ms ease,
-      transform 180ms ease;
-  }
-
-  .theme-toggle:hover {
-    color: var(--text);
-    border-color: var(--border-strong);
-    background: var(--button-secondary-bg-hover);
-    transform: translateY(-1px);
-  }
-
-  .theme-toggle-icon {
-    width: 0.62rem;
-    height: 0.62rem;
-    border-radius: 999px;
-    background: currentColor;
-    box-shadow: 0 0 1rem var(--theme-icon-glow);
-  }
-
-  .hero {
-    max-width: 780px;
-    padding-block: clamp(4rem, 10vw, 7.5rem) clamp(2rem, 5vw, 4rem);
-  }
-
-  .section-label,
-  .status-badge,
-  .status-topline {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.28em;
-  }
-
-  .identity-ribbon {
-    --ribbon-slant: 0.78rem;
-    --main-ribbon: #8f2458;
-    --main-ribbon-deep: #6f1642;
-    --main-ribbon-edge: rgba(255, 255, 255, 0.2);
-    --action-ribbon: #451027;
-    --action-ribbon-deep: #2d0819;
-    --action-offset: 0.9rem;
-    --action-travel: -1.4rem;
-
-    position: relative;
-    z-index: 20;
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.16rem;
-    margin: 0 0 1.25rem;
-    isolation: isolate;
-    overflow: visible;
-    color: #fff;
-    filter: drop-shadow(0 0 1.35rem rgba(255, 68, 150, 0.18));
-    transition:
-      filter 220ms ease,
-      transform 220ms ease;
-  }
-
-  .identity-ribbon-main,
-  .identity-ribbon-action {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.16rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.72rem;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .identity-ribbon-main {
-    position: relative;
-    z-index: 3;
-    padding: 0.58rem 1.15rem 0.58rem 1.35rem;
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 34%),
-      linear-gradient(90deg, var(--main-ribbon), var(--main-ribbon-deep));
-    color: #fff;
-    clip-path: polygon(
-      var(--ribbon-slant) 0,
-      100% 0,
-      calc(100% - var(--ribbon-slant)) 100%,
-      0 100%
-    );
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.14),
-      inset 0 1px 0 var(--main-ribbon-edge);
-  }
-
-  .identity-ribbon-action {
-    position: absolute;
-    top: 0;
-    left: calc(100% - var(--action-offset));
-    z-index: 1;
-    gap: 0.42rem;
-    padding: 0.58rem 1.05rem 0.58rem 1.7rem;
-    color: rgba(255, 255, 255, 0.92);
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 34%),
-      linear-gradient(90deg, var(--action-ribbon), var(--action-ribbon-deep));
-    clip-path: polygon(
-      var(--ribbon-slant) 0,
-      100% 0,
-      calc(100% - var(--ribbon-slant)) 100%,
-      0 100%
-    );
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-      0.7rem 0.8rem 1.6rem rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transform: translateX(var(--action-travel));
-    transition:
-      opacity 160ms ease,
-      transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
-    pointer-events: none;
-  }
-
-  .identity-ribbon:hover,
-  .identity-ribbon:focus-visible {
-    filter: drop-shadow(0 0 1.85rem rgba(255, 68, 150, 0.26));
-    transform: translateY(-1px);
-    outline: none;
-  }
-
-  .identity-ribbon:hover .identity-ribbon-action,
-  .identity-ribbon:focus-visible .identity-ribbon-action {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-  }
-
-  .identity-ribbon:hover .identity-ribbon-main,
-  .identity-ribbon:focus-visible .identity-ribbon-main {
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 34%),
-      linear-gradient(90deg, #a12b65, var(--main-ribbon-deep));
-  }
-
-  h1,
-  h2,
-  h3,
-  p {
-    margin: 0;
-  }
-
-  .hero-title {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.02em;
-    max-width: 8.5ch;
-    color: var(--text);
-    font-size: clamp(3.4rem, 8.7vw, 7.1rem);
-    font-weight: 800;
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-    font-kerning: normal;
-    letter-spacing: -0.06em;
-    line-height: 0.92;
-    text-wrap: balance;
-  }
-
-  .hero-title span {
-    display: block;
-  }
-
-  .hero-copy {
-    max-width: 40rem;
-    margin-top: 1rem;
-    color: var(--muted);
-    font-size: clamp(1rem, 1.45vw, 1.12rem);
-    line-height: 1.75;
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.85rem;
-    margin-top: 1.7rem;
-  }
-
-  .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 3rem;
-    padding-inline: 1.35rem;
-    border-radius: 999px;
-    font-size: 0.92rem;
-    font-weight: 700;
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      background 180ms ease;
-  }
-
-  .button:hover {
-    transform: translateY(-2px);
-  }
-
-  .button.primary {
-    background: var(--button-primary-bg);
-    box-shadow: 0 1rem 2rem var(--shadow);
-    color: var(--button-primary-text);
-  }
-
-  .button.secondary {
-    border: 1px solid var(--border-strong);
-    background: var(--button-secondary-bg);
-    color: var(--text);
-  }
-
-  .button.secondary:hover {
-    border-color: var(--border-strong);
-    background: var(--button-secondary-bg-hover);
-  }
-
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .feature-card,
-  .queue-panel,
-  .build-list {
-    border: 1px solid var(--border);
-    background:
-      linear-gradient(180deg, var(--panel-soft), transparent),
-      var(--panel);
-    box-shadow:
-      0 1rem 3rem var(--shadow),
-      inset 0 1px 0 var(--inset-highlight);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-  }
-
-  .feature-card {
-    position: relative;
-    display: flex;
-    min-height: 14.25rem;
-    overflow: hidden;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: 1.55rem;
-    border-radius: 1rem;
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      background 180ms ease;
-  }
-
-  .feature-card:hover {
-    border-color: var(--border-strong);
-    background:
-      linear-gradient(180deg, var(--panel-soft-hover), transparent),
-      var(--panel-hover);
-    transform: translateY(-4px);
-  }
-
-  .section-label {
-    margin-bottom: 1rem;
-    font-size: 0.78rem;
-    font-weight: 700;
-  }
-
-  .pink .section-label,
-  .section-label.pink {
-    color: var(--pink);
-  }
-
-  .blue .section-label,
-  .section-label.blue {
-    color: var(--blue);
-  }
-
-  .purple .section-label,
-  .section-label.purple {
-    color: var(--purple);
-  }
-
-  .feature-card h2,
-  .queue-panel h2 {
-    font-size: 1.1rem;
-    letter-spacing: -0.03em;
-  }
-
-  .feature-card p:not(.section-label),
-  .queue-panel > p {
-    margin-top: 0.8rem;
-    color: var(--muted);
-    line-height: 1.65;
-  }
-
-  .card-link {
-    position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    color: var(--muted);
-    font-size: 0.92rem;
-  }
-
-  .pink .card-link span {
-    color: var(--pink);
-  }
-
-  .blue .card-link span {
-    color: var(--blue);
-  }
-
-  .purple .card-link span {
-    color: var(--purple);
-  }
-
-  .card-visual {
-    position: absolute;
-    right: 1rem;
-    bottom: 1rem;
-    width: 9rem;
-    height: 6rem;
-    opacity: 0.28;
-    pointer-events: none;
-  }
-
-  .card-visual.flow {
-    border: 1px solid rgba(255, 115, 183, 0.18);
-    border-radius: 50%;
-    transform: skewX(-24deg) rotate(-8deg);
-  }
-
-  .card-visual.flow span {
-    position: absolute;
-    inset: calc(var(--i, 0) * 0.7rem);
-    border: 1px solid rgba(255, 115, 183, 0.26);
-    border-radius: 50%;
-  }
-
-  .card-visual.flow span:nth-child(1) {
-    --i: 1;
-  }
-
-  .card-visual.flow span:nth-child(2) {
-    --i: 2;
-  }
-
-  .card-visual.flow span:nth-child(3) {
-    --i: 3;
-  }
-
-  .card-visual.servers,
-  .card-visual.notes {
-    display: grid;
-    align-content: center;
-    gap: 0.45rem;
-  }
-
-  .card-visual.servers span {
-    height: 1.2rem;
-    border: 1px solid rgba(116, 185, 255, 0.55);
-    border-radius: 0.25rem;
-    background:
-      radial-gradient(circle at 88% 50%, var(--blue) 0 2px, transparent 3px),
-      rgba(116, 185, 255, 0.04);
-  }
-
-  .card-visual.notes {
-    width: 5rem;
-    height: 6.4rem;
-    padding: 1rem 0.8rem;
-    border: 1px solid rgba(199, 125, 255, 0.5);
-    border-radius: 0.35rem;
-  }
-
-  .card-visual.notes span {
-    height: 1px;
-    background: rgba(199, 125, 255, 0.65);
-  }
-
-  .lower-grid {
-    display: grid;
-    grid-template-columns: 0.9fr 1.9fr;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .queue-panel,
-  .build-list {
-    border-radius: 1rem;
-  }
-
-  .queue-panel {
-    padding: 1.55rem;
-  }
-
-  .status-card {
-    display: block;
-    margin-top: 1.6rem;
-    padding: 1.1rem;
-    border: 1px solid var(--border);
-    border-radius: 0.8rem;
-    background: var(--panel-soft);
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      background 180ms ease;
-  }
-
-  .status-card:hover {
-    border-color: rgba(95, 242, 160, 0.32);
-    background: var(--panel-soft-hover);
-    transform: translateY(-2px);
-  }
-
-  .status-topline {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    color: var(--muted);
-    font-size: 0.68rem;
-  }
-
-  .status-topline span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-  }
-
-  .live-dot {
-    width: 0.55rem;
-    height: 0.55rem;
-    border-radius: 999px;
-    background: var(--green);
-    box-shadow: 0 0 1.25rem rgba(95, 242, 160, 0.7);
-  }
-
-  .status-topline strong {
-    padding: 0.25rem 0.55rem;
-    border: 1px solid rgba(95, 242, 160, 0.32);
-    border-radius: 999px;
-    color: var(--green);
-    font-size: 0.62rem;
-    font-weight: 700;
-  }
-
-  .status-card p {
-    margin-top: 1.2rem;
-    color: var(--muted);
-  }
-
-  .status-card p span {
-    color: var(--green);
-  }
-
-  .build-list {
-    overflow: hidden;
-  }
-
-  .build-item {
-    display: grid;
-    min-height: 6.4rem;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 1.35rem;
-    padding: 1rem 1.35rem;
-    border-bottom: 1px solid var(--border);
-    transition:
-      background 180ms ease,
-      transform 180ms ease;
-  }
-
-  .build-item:last-child {
-    border-bottom: 0;
-  }
-
-  .build-item:hover {
-    background: var(--panel-soft-hover);
-  }
-
-  .build-icon {
-    display: grid;
-    width: 4rem;
-    height: 4rem;
-    place-items: center;
-    border: 1px solid var(--border);
-    border-radius: 0.8rem;
-    background: var(--panel-soft);
-  }
-
-  .build-icon svg {
-    width: 2rem;
-    height: 2rem;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.5;
-  }
-
-  .build-icon.pink {
-    border-color: rgba(255, 115, 183, 0.32);
-    background: rgba(255, 115, 183, 0.075);
-    color: var(--pink);
-  }
-
-  .build-icon.blue {
-    border-color: rgba(116, 185, 255, 0.32);
-    background: rgba(116, 185, 255, 0.075);
-    color: var(--blue);
-  }
-
-  .build-icon.green {
-    border-color: rgba(116, 185, 255, 0.32);
-    background: rgba(116, 185, 255, 0.075);
-    color: var(--blue);
-  }
-
-  .build-copy h3 {
-    font-size: clamp(1rem, 1.8vw, 1.35rem);
-    letter-spacing: -0.035em;
-  }
-
-  .build-copy p {
-    margin-top: 0.25rem;
-    color: var(--muted);
-    line-height: 1.45;
-  }
-
-  .build-meta {
-    display: flex;
-    align-items: center;
-    gap: 1.1rem;
-  }
-
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.35rem 0.62rem;
-    border-radius: 999px;
-    font-size: 0.64rem;
-    font-weight: 800;
-    white-space: nowrap;
-  }
-
-  .status-badge.pink {
-    border: 1px solid rgba(255, 115, 183, 0.32);
-    background: rgba(255, 115, 183, 0.08);
-    color: var(--pink);
-  }
-
-  .status-badge.green {
-    border: 1px solid rgba(95, 242, 160, 0.32);
-    background: rgba(95, 242, 160, 0.08);
-    color: var(--green);
-  }
-
-  .status-badge.blue {
-    border: 1px solid rgba(116, 185, 255, 0.32);
-    background: rgba(116, 185, 255, 0.08);
-    color: var(--blue);
-  }
-
-  .chevron {
-    color: var(--faint);
-    font-size: 2rem;
-    line-height: 1;
-  }
-
-  @media (max-width: 950px) {
-    .site-header,
-    .header-actions {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .header-actions {
-      width: 100%;
-      gap: 0.85rem;
-    }
-
-    nav {
-      width: 100%;
-      overflow-x: auto;
-      padding-bottom: 0.2rem;
-    }
-
-    .card-grid,
-    .lower-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .hero {
-      padding-top: 4rem;
-    }
-  }
-
-  @media (max-width: 620px) {
-    .page-shell {
-      padding: 1.4rem 1rem 2rem;
-    }
-
-    .brand {
-      letter-spacing: 0.22em;
-    }
-
-    nav {
-      gap: 1rem;
-      font-size: 0.82rem;
-    }
-
-    .identity-ribbon {
-      max-width: 100%;
-    }
-
-    .identity-ribbon-main,
-    .identity-ribbon-action {
-      min-height: 2rem;
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
-    }
-
-    .identity-ribbon-main {
-      max-width: min(100%, 24rem);
-      overflow: hidden;
-      padding-inline: 1.05rem 0.95rem;
-      text-overflow: ellipsis;
-    }
-
-    .identity-ribbon-action {
-      padding-inline: 1.35rem 0.95rem;
-    }
-
-    .hero-title {
-      max-width: 9ch;
-      font-size: clamp(3rem, 17vw, 4.4rem);
-      letter-spacing: -0.055em;
-    }
-
-    .hero-copy {
-      font-size: 0.98rem;
-    }
-
-    .feature-card {
-      min-height: 13rem;
-    }
-
-    .build-item {
-      grid-template-columns: auto 1fr;
-      align-items: flex-start;
-    }
-
-    .build-meta {
-      grid-column: 2;
-      justify-content: space-between;
-    }
-
-    .status-topline {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-</style>
-
+    <div class="home-signal surface-panel" aria-label="current signal">
+      <p class="eyebrow">current signal</p>
+      <div class="signal-grid">
+        <span>CFD</span>
+        <span>AMR</span>
+        <span>Linux</span>
+        <span>Cloudflare</span>
+      </div>
+      <p>
+        Building a bridge between aerospace simulation work and practical systems
+        engineering: solver development, monitoring, automation, and documentation.
+      </p>
+    </div>
+  </section>
+
+  <section class="focus-grid" aria-label="site sections">
+    {focusAreas.map((area) => (
+      <a class="focus-card surface-panel" href={area.href}>
+        <p class="eyebrow">{area.label}</p>
+        <h2>{area.title}</h2>
+        <p>{area.description}</p>
+        <span class="text-link">open {area.label} -></span>
+      </a>
+    ))}
+  </section>
+
+  <section class="home-split">
+    <div class="section-heading">
+      <p class="eyebrow">build queue</p>
+      <h2>active threads</h2>
+      <p>
+        The work here is intentionally connected: model complex physics, operate
+        useful services, and write down enough context that future work starts faster.
+      </p>
+    </div>
+
+    <div class="queue-list">
+      {buildQueue.map((item, index) => (
+        <a class="queue-item" href={item.href}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            <div class="queue-topline">
+              <h3>{item.title}</h3>
+              <small>{item.status}</small>
+            </div>
+            <p>{item.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="surface-panel home-status">
+    <div>
+      <p class="eyebrow">public systems</p>
+      <h2>status pages, dashboards, and service health.</h2>
+      <p>
+        The systems page separates public status from private infrastructure controls,
+        keeping the visible parts useful without exposing operational detail.
+      </p>
+    </div>
+
+    <a class="button primary" href="/systems">check systems</a>
+  </section>
+</BaseLayout>

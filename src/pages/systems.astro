@@ -1,128 +1,94 @@
 ---
-import "../styles/global.css";
+import BaseLayout from "../layouts/base.astro";
+import PageIntro from "../components/page-intro.astro";
 
 const services = [
   {
     name: "public website",
     status: "online",
-    detail: "served by cloudflare pages"
+    detail: "Astro site deployed through Cloudflare.",
   },
   {
     name: "status monitoring",
     status: "online",
-    detail: "uptime kuma monitoring stack"
+    detail: "Uptime Kuma public status board for internet-facing checks.",
   },
   {
     name: "minecraft infrastructure",
     status: "private",
-    detail: "public status pending"
+    detail: "Game server operations, backup workflows, and admin tooling stay behind access controls.",
   },
   {
     name: "homelab node",
     status: "private",
-    detail: "internal metrics hidden behind access"
-  }
+    detail: "Host telemetry, container details, and internal metrics are intentionally not public.",
+  },
+];
+
+const layers = [
+  {
+    title: "edge and access",
+    detail: "Cloudflare DNS, Pages deploys, tunnels, and policy gates for private surfaces.",
+  },
+  {
+    title: "observability",
+    detail: "Status checks, alerting, incident visibility, and enough telemetry to debug without oversharing.",
+  },
+  {
+    title: "service operations",
+    detail: "Linux services, containerized workloads, backups, update habits, and recovery notes.",
+  },
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>systems | urmom.systems</title>
-    <meta
-      name="description"
-      content="public systems status for urmom.systems."
-    />
-  </head>
+<BaseLayout
+  title="systems · colin vargas"
+  description="Public systems status and infrastructure notes for urmom.systems."
+  active="systems"
+>
+  <PageIntro
+    eyebrow="systems / public status"
+    title="operational status, minus the private parts."
+    description="A public view of the urmom.systems stack: website health, monitoring, service operations, and the boundary between useful status and private telemetry."
+  />
 
-  <body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
-    <div class="pointer-events-none fixed inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:48px_48px]"></div>
-    <div class="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(236,72,153,0.16),transparent_35%),radial-gradient(circle_at_70%_10%,rgba(96,165,250,0.13),transparent_35%)]"></div>
-
-    <main class="relative mx-auto max-w-6xl px-6 py-10">
-      <nav class="mb-20 flex items-center justify-between border-b border-white/10 pb-5">
-        <a href="/" class="font-mono text-sm tracking-[0.22em] text-zinc-300">
-          urmom.systems
-        </a>
-
-        <div class="flex gap-6 font-mono text-sm text-zinc-400">
-          <a href="/projects" class="hover:text-white">projects</a>
-          <a href="/research" class="hover:text-white">research</a>
-          <a href="/systems" class="text-white">systems</a>
-          <a href="/writing" class="hover:text-white">writing</a>
+  <section class="systems-overview">
+    {services.map((service) => (
+      <article class="system-card surface-panel">
+        <div class="system-card-topline">
+          <h2>{service.name}</h2>
+          <span class:list={["status-pill", service.status]}>{service.status}</span>
         </div>
-      </nav>
+        <p>{service.detail}</p>
+      </article>
+    ))}
+  </section>
 
-      <section class="mb-14">
-        <p class="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-pink-300">
-          public systems view
-        </p>
-
-        <h1 class="max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-white md:text-7xl">
-          operational status, minus the parts that should not be on the internet.
-        </h1>
-
-        <p class="mt-7 max-w-3xl text-lg leading-8 text-zinc-400">
-          this page shows the public-facing health of the urmom.systems stack.
-          deeper metrics exist, allegedly, but they are hidden behind authorization
-          because we are trying to be funny, not reckless.
-        </p>
-      </section>
-
-      <section class="mb-16 grid gap-4 md:grid-cols-2">
-        {services.map((service) => (
-          <article class="rounded-2xl border border-white/10 bg-white/[0.035] p-6">
-            <div class="mb-4 flex items-center justify-between gap-4">
-              <h2 class="text-xl font-semibold text-white">{service.name}</h2>
-
-              <span class:list={[
-                "rounded-full px-3 py-1 font-mono text-xs uppercase tracking-[0.18em]",
-                service.status === "online"
-                  ? "border border-emerald-400/30 bg-emerald-400/10 text-emerald-300"
-                  : "border border-blue-400/30 bg-blue-400/10 text-blue-300"
-              ]}>
-                {service.status}
-              </span>
-            </div>
-
-            <p class="leading-7 text-zinc-400">{service.detail}</p>
-          </article>
-        ))}
-      </section>
-
-      <section class="rounded-3xl border border-white/10 bg-zinc-900/60 p-6">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <p class="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-blue-300">
-              live status
-            </p>
-            <h2 class="text-3xl font-semibold tracking-tight text-white">
-              uptime kuma public board
-            </h2>
-          </div>
-
-          <a
-            href="https://status.urmom.systems"
-            class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-white/30 hover:bg-white/10"
-          >
-            open status
-          </a>
+  <section class="systems-split">
+    <div class="surface-panel status-board">
+      <div class="status-board-header">
+        <div>
+          <p class="eyebrow">live status</p>
+          <h2>uptime kuma public board</h2>
         </div>
+        <a class="button ghost" href="https://status.urmom.systems">open status</a>
+      </div>
 
-        <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/40">
-          <iframe
-            src="https://status.urmom.systems"
-            class="h-[520px] w-full"
-            loading="lazy"
-            title="urmom.systems public status"
-          />
-        </div>
-      </section>
+      <iframe
+        src="https://status.urmom.systems"
+        loading="lazy"
+        title="urmom.systems public status"
+      />
+    </div>
 
-      <footer class="mt-20 border-t border-white/10 pt-6 font-mono text-xs tracking-wide text-zinc-600">
-        public status only · private telemetry requires authorization
-      </footer>
-    </main>
-  </body>
-</html>
+    <aside class="systems-layers">
+      <p class="eyebrow">infrastructure layers</p>
+      {layers.map((layer) => (
+        <article>
+          <h3>{layer.title}</h3>
+          <p>{layer.detail}</p>
+        </article>
+      ))}
+    </aside>
+  </section>
+</BaseLayout>

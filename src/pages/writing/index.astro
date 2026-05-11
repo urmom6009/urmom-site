@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../../layouts/base.astro";
+import PageIntro from "../../components/page-intro.astro";
+
+const notes = [
+  {
+    title: "AMR solver notes",
+    label: "research",
+    status: "drafting",
+    description:
+      "Finite-volume decisions, verification cases, mesh refinement notes, and solver architecture tradeoffs.",
+  },
+  {
+    title: "homelab operations log",
+    label: "systems",
+    status: "planned",
+    description:
+      "Service setup, monitoring choices, backup procedures, access rules, and recovery checklists.",
+  },
+  {
+    title: "technical project writeups",
+    label: "projects",
+    status: "planned",
+    description:
+      "Problem framing, implementation notes, what broke, what improved, and what should happen next.",
+  },
+];
+---
+
+<BaseLayout
+  title="writing · colin vargas"
+  description="Technical notes and project writeups by Colin Vargas."
+  active="writing"
+>
+  <PageIntro
+    eyebrow="writing / notes"
+    title="technical notes with enough context to be useful later."
+    description="This page is the staging area for research notes, infrastructure runbooks, and project writeups that turn scattered work into reusable documentation."
+  />
+
+  <section class="writing-list">
+    {notes.map((note) => (
+      <article class="writing-item surface-panel">
+        <div class="writing-topline">
+          <p class="eyebrow">{note.label}</p>
+          <span>{note.status}</span>
+        </div>
+        <h2>{note.title}</h2>
+        <p>{note.description}</p>
+      </article>
+    ))}
+  </section>
+
+  <section class="surface-panel writing-note">
+    <p class="eyebrow">publishing rule</p>
+    <h2>Every note should explain the problem, the decision, and the next move.</h2>
+    <p>
+      The goal is not a perfect blog archive on day one. The goal is a practical
+      record that makes research, systems work, and project development easier to
+      resume after context fades.
+    </p>
+  </section>
+</BaseLayout>
