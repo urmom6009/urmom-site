@@ -1,52 +1,34 @@
 ---
 import BaseLayout from "../layouts/base.astro";
 
-const focusAreas = [
+const directions = [
   {
     label: "research",
-    title: "computational aerospace",
-    description:
-      "Numerical methods, CFD, adaptive mesh refinement, propulsion, and verification workflows.",
+    title: "adaptive flow methods",
     href: "/research",
+  },
+  {
+    label: "projects",
+    title: "tools with receipts",
+    href: "/projects",
   },
   {
     label: "systems",
-    title: "personal infrastructure",
-    description:
-      "Cloudflare routing, monitoring, Linux services, backups, dashboards, and public status surfaces.",
+    title: "infrastructure that admits it exists",
     href: "/systems",
-  },
-  {
-    label: "writing",
-    title: "technical notes",
-    description:
-      "Readable notes on engineering, infrastructure, research tooling, and lessons learned while building.",
-    href: "/writing",
   },
 ];
 
-const buildQueue = [
-  {
-    title: "AMReX finite-volume solver",
-    status: "active",
-    description:
-      "A thesis-oriented solver path for conservation laws, AMR workflows, and propulsion-relevant physics.",
-    href: "/research",
-  },
-  {
-    title: "urmom.systems monitoring stack",
-    status: "live",
-    description:
-      "Public status, private telemetry, Cloudflare access, and uptime checks for exposed services.",
-    href: "/systems",
-  },
-  {
-    title: "technical writing archive",
-    status: "drafting",
-    description:
-      "A place for project notes, research summaries, setup writeups, and technical decisions worth keeping.",
-    href: "/writing",
-  },
+const fragments = [
+  "finite volume",
+  "propulsion",
+  "AMR",
+  "status pages",
+  "linux",
+  "technical notes",
+  "verification",
+  "cloudflare",
+  "paraview",
 ];
 ---
 
@@ -55,84 +37,48 @@ const buildQueue = [
   description="Personal site for Colin Vargas: aerospace engineering, numerical methods, infrastructure, projects, and technical notes."
   active="home"
 >
-  <section class="home-hero" aria-labelledby="home-title">
-    <div class="home-hero-copy">
+  <section class="home-editorial" aria-labelledby="home-title">
+    <div class="home-editorial-copy">
       <p class="eyebrow">colin vargas / aerospace engineering</p>
-      <h1 id="home-title">engineering systems that mostly behave.</h1>
+      <h1 id="home-title">useful systems, built near the edge of chaos.</h1>
       <p>
-        I work across computational fluid dynamics, numerical methods, propulsion,
-        and the infrastructure needed to keep projects visible, measurable, and
-        useful after the first demo.
+        I work where computational aerospace, numerical methods, and personal
+        infrastructure start arguing with each other. The goal is not to show
+        everything at once. The goal is to make the signal sharp enough to follow.
       </p>
 
       <div class="button-row">
-        <a class="button primary" href="/projects">view projects</a>
-        <a class="button ghost" href="/research">research direction</a>
+        <a class="button primary" href="/about">online resume</a>
+        <a class="button ghost" href="/projects">selected work</a>
       </div>
     </div>
 
-    <div class="home-signal surface-panel" aria-label="current signal">
-      <p class="eyebrow">current signal</p>
-      <div class="signal-grid">
-        <span>CFD</span>
-        <span>AMR</span>
-        <span>Linux</span>
-        <span>Cloudflare</span>
-      </div>
-      <p>
-        Building a bridge between aerospace simulation work and practical systems
-        engineering: solver development, monitoring, automation, and documentation.
-      </p>
-    </div>
+    <aside class="home-chaos-map" aria-label="working fragments">
+      {fragments.map((fragment, index) => (
+        <span style={`--i: ${index}`}>{fragment}</span>
+      ))}
+    </aside>
   </section>
 
-  <section class="focus-grid" aria-label="site sections">
-    {focusAreas.map((area) => (
-      <a class="focus-card surface-panel" href={area.href}>
-        <p class="eyebrow">{area.label}</p>
-        <h2>{area.title}</h2>
-        <p>{area.description}</p>
-        <span class="text-link">open {area.label} -></span>
+  <section class="home-direction-band" aria-label="primary directions">
+    {directions.map((item) => (
+      <a href={item.href}>
+        <span>{item.label}</span>
+        <strong>{item.title}</strong>
       </a>
     ))}
   </section>
 
-  <section class="home-split">
-    <div class="section-heading">
-      <p class="eyebrow">build queue</p>
-      <h2>active threads</h2>
-      <p>
-        The work here is intentionally connected: model complex physics, operate
-        useful services, and write down enough context that future work starts faster.
-      </p>
-    </div>
-
-    <div class="queue-list">
-      {buildQueue.map((item, index) => (
-        <a class="queue-item" href={item.href}>
-          <span>{String(index + 1).padStart(2, "0")}</span>
-          <div>
-            <div class="queue-topline">
-              <h3>{item.title}</h3>
-              <small>{item.status}</small>
-            </div>
-            <p>{item.description}</p>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class="surface-panel home-status">
-    <div>
-      <p class="eyebrow">public systems</p>
-      <h2>status pages, dashboards, and service health.</h2>
-      <p>
-        The systems page separates public status from private infrastructure controls,
-        keeping the visible parts useful without exposing operational detail.
-      </p>
-    </div>
-
-    <a class="button primary" href="/systems">check systems</a>
+  <section class="home-statement">
+    <p class="eyebrow">operating thesis</p>
+    <h2>
+      Build the solver, run the system, write down the weird part before it
+      becomes folklore.
+    </h2>
+    <p>
+      This site is a working surface for research direction, project notes,
+      infrastructure, and the occasional technical explanation that made enough
+      sense to survive being written down.
+    </p>
   </section>
 </BaseLayout>

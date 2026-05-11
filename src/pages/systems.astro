@@ -39,6 +39,21 @@ const layers = [
     detail: "Linux services, containerized workloads, backups, update habits, and recovery notes.",
   },
 ];
+
+const statusSignals = [
+  {
+    label: "website",
+    value: "public",
+  },
+  {
+    label: "monitoring",
+    value: "external",
+  },
+  {
+    label: "telemetry",
+    value: "private",
+  },
+];
 ---
 
 <BaseLayout
@@ -69,16 +84,26 @@ const layers = [
       <div class="status-board-header">
         <div>
           <p class="eyebrow">live status</p>
-          <h2>uptime kuma public board</h2>
+          <h2>status lives off-site</h2>
         </div>
         <a class="button ghost" href="https://status.urmom.systems">open status</a>
       </div>
 
-      <iframe
-        src="https://status.urmom.systems"
-        loading="lazy"
-        title="urmom.systems public status"
-      />
+      <div class="status-preview" aria-label="public status preview">
+        <p>
+          The public Uptime Kuma board blocks cross-site embedding, so this page
+          links out instead of showing a blank frame.
+        </p>
+
+        <div class="status-signal-grid">
+          {statusSignals.map((item) => (
+            <div>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
 
     <aside class="systems-layers">
