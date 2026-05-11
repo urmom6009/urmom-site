@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../layouts/base.astro";
+import PageIntro from "../components/page-intro.astro";
+
+const methods = [
+  "finite-volume discretization",
+  "conservation diagnostics",
+  "adaptive mesh refinement",
+  "verification cases",
+  "post-processing workflows",
+  "propulsion-relevant physics",
+];
+
+const milestones = [
+  {
+    phase: "01",
+    title: "solver foundations",
+    description:
+      "Build and verify scalar transport, flux evaluation, boundary handling, and conservation checks before adding more complex physics.",
+  },
+  {
+    phase: "02",
+    title: "adaptive infrastructure",
+    description:
+      "Use AMR workflows to put resolution where the flow demands it, while keeping diagnostics clear enough to trust the result.",
+  },
+  {
+    phase: "03",
+    title: "propulsion relevance",
+    description:
+      "Extend toward compressible-flow and gas-turbine-relevant cases, with a long-term path toward combustion and multiphase behavior.",
+  },
+];
+
+const outputs = [
+  {
+    label: "code",
+    value: "solver components",
+  },
+  {
+    label: "evidence",
+    value: "verification plots",
+  },
+  {
+    label: "workflow",
+    value: "ParaView analysis",
+  },
+];
+---
+
+<BaseLayout
+  title="research · colin vargas"
+  description="research interests and computational fluid dynamics work by colin vargas."
+  active="research"
+>
+  <PageIntro
+    eyebrow="research / computational physics"
+    title="adaptive methods for aerospace flow."
+    description="My research direction centers on numerical methods, computational fluid dynamics, adaptive simulation, and propulsion-relevant modeling."
+  />
+
+  <section class="research-layout">
+    <article class="surface-panel main-panel">
+      <p class="eyebrow">primary direction</p>
+      <h2>adaptive cfd solver development</h2>
+
+      <p>
+        My current work is building toward higher-fidelity CFD tools for aerospace
+        and propulsion problems. The near-term emphasis is a reliable numerical
+        foundation: conservative updates, boundary behavior, refinement studies,
+        and verification workflows that make results easier to trust.
+      </p>
+
+      <p>
+        From that base, the longer path points toward Navier-Stokes simulation,
+        turbulence modeling, combustion, evaporation, multiphase effects, and
+        gas-turbine-relevant applications.
+      </p>
+    </article>
+
+    <aside class="surface-panel side-panel">
+      <p class="eyebrow">method stack</p>
+
+      <ul class="tag-list">
+        {methods.map((method) => (
+          <li>{method}</li>
+        ))}
+      </ul>
+    </aside>
+  </section>
+
+  <section class="research-output-strip" aria-label="research outputs">
+    {outputs.map((item) => (
+      <div>
+        <span>{item.label}</span>
+        <strong>{item.value}</strong>
+      </div>
+    ))}
+  </section>
+
+  <section class="timeline-list">
+    {milestones.map((item) => (
+      <article class="surface-panel resume-entry research-step">
+        <p class="eyebrow">{item.phase} / milestone</p>
+        <h2>{item.title}</h2>
+        <p>{item.description}</p>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

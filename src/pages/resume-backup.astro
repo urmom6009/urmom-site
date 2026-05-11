@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/base.astro";
+import PageIntro from "../components/page-intro.astro";
+import HeadshotCard from "../components/headshot-card.astro";
+---
+
+<BaseLayout
+  title="resume · colin vargas"
+  description="resume for colin vargas, aerospace engineering graduate student focused on cfd, propulsion, and computational systems."
+  active="resume"
+>
+  <PageIntro
+    eyebrow="resume / capability summary"
+    title="computational aerospace work, dressed like it has standards."
+    description="a focused view of my engineering, teaching, research, and infrastructure work."
+  />
+
+  <section class="resume-hero">
+    <div class="resume-actions surface-panel">
+      <p class="eyebrow">download</p>
+      <h2>resume</h2>
+      <p>
+        for the actual document, keep the pdf clean, ats-readable, and boring enough
+        for recruiters while this page does the visual identity work. painful, but strategic.
+      </p>
+
+      <div class="button-row">
+        <a class="button primary" href="/resume/resume.pdf">
+          download pdf
+        </a>
+        <a class="button ghost" href="mailto:colinvargas03@gmail.com">
+          contact
+        </a>
+      </div>
+    </div>
+
+    <HeadshotCard />
+  </section>
+
+  <section class="resume-sections">
+    <article class="surface-panel resume-entry">
+      <p class="eyebrow">research</p>
+      <h2>computational fluid dynamics</h2>
+      <p>
+        developing numerical methods and solver infrastructure for high-fidelity
+        aerospace and propulsion-relevant flow modeling.
+      </p>
+    </article>
+
+    <article class="surface-panel resume-entry">
+      <p class="eyebrow">teaching</p>
+      <h2>advanced math methods for engineers</h2>
+      <p>
+        supporting engineering students through numerical methods, linear algebra,
+        and the recurring academic tragedy of matrix notation.
+      </p>
+    </article>
+
+    <article class="surface-panel resume-entry">
+      <p class="eyebrow">systems</p>
+      <h2>homelab and monitoring infrastructure</h2>
+      <p>
+        building cloudflare-backed, linux-based services for uptime monitoring,
+        dashboards, automation, and secure public/private access patterns.
+      </p>
+    </article>
+  </section>
+</BaseLayout>

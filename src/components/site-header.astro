@@ -1,0 +1,51 @@
+---
+const { active = "" } = Astro.props;
+
+const links = [
+  { href: "/", label: "home", key: "home" },
+  { href: "/about", label: "about", key: "about" },
+  { href: "/projects", label: "projects", key: "projects" },
+  { href: "/research", label: "research", key: "research" },
+  { href: "/systems", label: "systems", key: "systems" },
+  { href: "/writing", label: "writing", key: "writing" },
+  { href: "/contact", label: "contact", key: "contact" },
+];
+
+const currentPage = links.find((link) => link.key === active) ?? links[0];
+const navLinks = links.filter((link) => link.key !== "contact");
+const revealLinks = navLinks.filter((link) => link.key !== currentPage.key);
+---
+
+<header class="site-header">
+  <a class="brand-lockup" href="/">
+    <span class="brand-mark">cv</span>
+    <span>
+      <strong>colin vargas</strong>
+      <small>aerospace · compute · systems</small>
+    </span>
+  </a>
+
+  <div class="header-actions">
+    <nav class="nav-ribbon" aria-label="primary navigation">
+      <button class="nav-current" type="button" aria-label="show navigation links">
+        {currentPage.label}
+      </button>
+
+      <div class="nav-ribbon-links">
+        {revealLinks.map((link) => (
+          <a href={link.href} class="nav-link">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <a class="contact-ribbon" href="/contact">
+      contact
+    </a>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="toggle color theme">
+      ◐
+    </button>
+  </div>
+</header>

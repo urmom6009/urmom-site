@@ -1,0 +1,56 @@
+---
+import "../styles/global.css";
+import SiteHeader from "../components/site-header.astro";
+
+const {
+  title = "colin vargas",
+  description = "aerospace engineering, computational systems, and mildly hostile infrastructure.",
+  active = "",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <slot name="head" />
+
+    <script is:inline>
+      const storedTheme = localStorage.getItem("theme");
+      const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      document.documentElement.dataset.theme = storedTheme || (prefersLight ? "light" : "dark");
+    </script>
+  </head>
+
+  <body>
+    <div class="background-glow"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="page-shell">
+      <SiteHeader active={active} />
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <span>urmom.systems</span>
+        <span>systems nominal, unfortunately.</span>
+      </footer>
+    </div>
+
+    <script is:inline>
+      const toggle = document.querySelector("[data-theme-toggle]");
+
+      toggle?.addEventListener("click", () => {
+        const html = document.documentElement;
+        const next = html.dataset.theme === "light" ? "dark" : "light";
+        html.dataset.theme = next;
+        localStorage.setItem("theme", next);
+      });
+    </script>
+  </body>
+</html>

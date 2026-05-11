@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/base.astro";
+---
+
+<BaseLayout
+  title="404 · page not found"
+  description="page not found."
+>
+  <section class="not-found surface-panel">
+    <p class="eyebrow">404 / routing failure</p>
+    <h1>this page wandered off.</h1>
+    <p>
+      either the link is broken, the route does not exist yet, or the internet has once
+      again demonstrated its commitment to disorder.
+    </p>
+
+    <div class="button-row">
+      <a class="button primary" href="/">return home</a>
+      <a class="button ghost" href="/systems">check systems</a>
+    </div>
+  </section>
+</BaseLayout>

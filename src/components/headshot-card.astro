@@ -1,0 +1,21 @@
+---
+const {
+  src = "/images/headshot.webp",
+  alt = "headshot of colin vargas",
+} = Astro.props;
+---
+
+<aside class="headshot-card" aria-label="profile image and status">
+  <div class="headshot-frame">
+    <img src={src} alt={alt} loading="eager" />
+  </div>
+
+  <div class="headshot-meta">
+    <p class="eyebrow">current signal</p>
+    <h2>colin vargas</h2>
+    <p>
+      m.s. aerospace engineering candidate focused on computational fluid dynamics,
+      propulsion, and infrastructure that is only mildly cursed.
+    </p>
+  </div>
+</aside>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../../layouts/base.astro";
+import PageIntro from "../../components/page-intro.astro";
+
+const developments = [
+  "Split public status from private operations so the useful parts can be visible without exposing telemetry.",
+  "Added project and systems pages that document the stack instead of leaving it as private context.",
+  "Started shaping the site into a portfolio surface backed by actual services and deployment history.",
+];
+
+const photoStubs = [
+  "status page screenshot",
+  "monitoring dashboard crop",
+  "cloudflare routing diagram",
+];
+
+const nextSteps = [
+  "Add a public architecture diagram that avoids leaking private host details.",
+  "Document the deploy path from local changes to Cloudflare.",
+  "Capture status and dashboard screenshots for the project gallery.",
+];
+---
+
+<BaseLayout
+  title="urmom.systems infrastructure · projects"
+  description="Project stub for urmom.systems infrastructure."
+  active="projects"
+>
+  <PageIntro
+    eyebrow="project / systems"
+    title="urmom.systems infrastructure"
+    description="A practical infrastructure project for public status, private telemetry, service routing, monitoring, and deployment visibility."
+  />
+
+  <section class="project-detail-grid">
+    <article class="surface-panel project-detail-main">
+      <p class="eyebrow">purpose</p>
+      <h2>make personal infrastructure legible.</h2>
+      <p>
+        This project tracks the operational layer behind the site: Cloudflare,
+        routing, status pages, dashboards, uptime checks, access boundaries, and
+        the habit of documenting systems before they become folklore.
+      </p>
+    </article>
+
+    <aside class="surface-panel project-facts">
+      <p class="eyebrow">stack</p>
+      <ul class="tag-list">
+        <li>Linux</li>
+        <li>Docker</li>
+        <li>Cloudflare</li>
+        <li>Uptime Kuma</li>
+        <li>Astro</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">recent developments</p>
+      <h2>current progress</h2>
+    </div>
+
+    <div class="detail-list">
+      {developments.map((item) => (
+        <article class="surface-panel detail-item">
+          <p>{item}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">photos / diagrams</p>
+      <h2>visual placeholders</h2>
+    </div>
+
+    <div class="photo-stub-grid">
+      {photoStubs.map((item) => (
+        <div class="photo-stub">
+          <span>{item}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">next steps</p>
+      <h2>what belongs here next</h2>
+    </div>
+
+    <div class="detail-list">
+      {nextSteps.map((item) => (
+        <article class="surface-panel detail-item">
+          <p>{item}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
