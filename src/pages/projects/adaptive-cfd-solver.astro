@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../../layouts/base.astro";
+import PageIntro from "../../components/page-intro.astro";
+
+const developments = [
+  "Defined the solver direction around finite-volume conservation, verification, and AMR-ready structure.",
+  "Started organizing research notes around scalar transport, boundary behavior, and refinement studies.",
+  "Identified the next useful artifacts: verification plots, architecture notes, and ParaView screenshots.",
+];
+
+const photoStubs = [
+  "mesh refinement screenshot",
+  "ParaView flow visualization",
+  "solver architecture sketch",
+];
+
+const nextSteps = [
+  "Publish the first verification case with plots and error behavior.",
+  "Add notes on solver architecture and boundary-condition handling.",
+  "Collect screenshots from ParaView once the visual pipeline is stable.",
+];
+---
+
+<BaseLayout
+  title="adaptive cfd solver · projects"
+  description="Project stub for adaptive CFD solver development."
+  active="projects"
+>
+  <PageIntro
+    eyebrow="project / numerical methods"
+    title="adaptive cfd solver development"
+    description="A research project aimed at building reliable finite-volume and AMR-capable workflows for aerospace flow problems."
+  />
+
+  <section class="project-detail-grid">
+    <article class="surface-panel project-detail-main">
+      <p class="eyebrow">purpose</p>
+      <h2>make simulation results easier to trust.</h2>
+      <p>
+        This page will track the solver work behind my graduate research direction:
+        conservative updates, verification cases, mesh refinement, post-processing,
+        and eventually propulsion-relevant extensions.
+      </p>
+    </article>
+
+    <aside class="surface-panel project-facts">
+      <p class="eyebrow">stack</p>
+      <ul class="tag-list">
+        <li>C++</li>
+        <li>AMReX</li>
+        <li>finite volume</li>
+        <li>Python</li>
+        <li>ParaView</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">recent developments</p>
+      <h2>current progress</h2>
+    </div>
+
+    <div class="detail-list">
+      {developments.map((item) => (
+        <article class="surface-panel detail-item">
+          <p>{item}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">photos / figures</p>
+      <h2>visual placeholders</h2>
+    </div>
+
+    <div class="photo-stub-grid">
+      {photoStubs.map((item) => (
+        <div class="photo-stub">
+          <span>{item}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">next steps</p>
+      <h2>what belongs here next</h2>
+    </div>
+
+    <div class="detail-list">
+      {nextSteps.map((item) => (
+        <article class="surface-panel detail-item">
+          <p>{item}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

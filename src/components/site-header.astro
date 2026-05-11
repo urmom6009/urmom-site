@@ -8,7 +8,12 @@ const links = [
   { href: "/research", label: "research", key: "research" },
   { href: "/systems", label: "systems", key: "systems" },
   { href: "/writing", label: "writing", key: "writing" },
+  { href: "/contact", label: "contact", key: "contact" },
 ];
+
+const currentPage = links.find((link) => link.key === active) ?? links[0];
+const navLinks = links.filter((link) => link.key !== "contact");
+const revealLinks = navLinks.filter((link) => link.key !== currentPage.key);
 ---
 
 <header class="site-header">
@@ -20,22 +25,22 @@ const links = [
     </span>
   </a>
 
-  <nav class="site-nav" aria-label="primary navigation">
-    {links.map((link) => (
-      <a
-        href={link.href}
-        class:list={[
-          "nav-link",
-          active === link.key && "is-active",
-        ]}
-      >
-        {link.label}
-      </a>
-    ))}
-  </nav>
-
   <div class="header-actions">
-    <a class="contact-ribbon" href="/about#contact">
+    <nav class="nav-ribbon" aria-label="primary navigation">
+      <button class="nav-current" type="button" aria-label="show navigation links">
+        {currentPage.label}
+      </button>
+
+      <div class="nav-ribbon-links">
+        {revealLinks.map((link) => (
+          <a href={link.href} class="nav-link">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <a class="contact-ribbon" href="/contact">
       contact
     </a>
 

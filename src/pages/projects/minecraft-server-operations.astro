@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../../layouts/base.astro";
+import PageIntro from "../../components/page-intro.astro";
+
+const developments = [
+  "Defined the operations scope around Paper server hosting, updates, backups, and access control.",
+  "Separated private operational detail from public-facing project documentation.",
+  "Queued future work for monitoring, restart workflows, backup verification, and player-facing status notes.",
+];
+
+const photoStubs = [
+  "server console screenshot",
+  "backup workflow diagram",
+  "world or spawn photo",
+];
+
+const nextSteps = [
+  "Write the backup and restore checklist.",
+  "Add monitoring notes once service checks are stable.",
+  "Collect screenshots that show the server experience without exposing private controls.",
+];
+---
+
+<BaseLayout
+  title="minecraft server operations · projects"
+  description="Project stub for Minecraft server operations."
+  active="projects"
+>
+  <PageIntro
+    eyebrow="project / operations"
+    title="minecraft server operations"
+    description="A systems project around running a Paper server with backups, updates, monitoring, access control, and clearer operational habits."
+  />
+
+  <section class="project-detail-grid">
+    <article class="surface-panel project-detail-main">
+      <p class="eyebrow">purpose</p>
+      <h2>turn game hosting into real operations practice.</h2>
+      <p>
+        The server is a useful proving ground for service management: keeping
+        software updated, checking backups, watching uptime, controlling access,
+        and making recovery boring enough to trust.
+      </p>
+    </article>
+
+    <aside class="surface-panel project-facts">
+      <p class="eyebrow">stack</p>
+      <ul class="tag-list">
+        <li>Paper</li>
+        <li>Bash</li>
+        <li>systemd</li>
+        <li>backups</li>
+        <li>monitoring</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">recent developments</p>
+      <h2>current progress</h2>
+    </div>
+
+    <div class="detail-list">
+      {developments.map((item) => (
+        <article class="surface-panel detail-item">
+          <p>{item}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">photos / operations notes</p>
+      <h2>visual placeholders</h2>
+    </div>
+
+    <div class="photo-stub-grid">
+      {photoStubs.map((item) => (
+        <div class="photo-stub">
+          <span>{item}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="project-detail-section">
+    <div class="section-heading">
+      <p class="eyebrow">next steps</p>
+      <h2>what belongs here next</h2>
+    </div>
+
+    <div class="detail-list">
+      {nextSteps.map((item) => (
+        <article class="surface-panel detail-item">
+          <p>{item}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,6 +1,51 @@
 ---
 import BaseLayout from "../layouts/base.astro";
 import PageIntro from "../components/page-intro.astro";
+
+const methods = [
+  "finite-volume discretization",
+  "conservation diagnostics",
+  "adaptive mesh refinement",
+  "verification cases",
+  "post-processing workflows",
+  "propulsion-relevant physics",
+];
+
+const milestones = [
+  {
+    phase: "01",
+    title: "solver foundations",
+    description:
+      "Build and verify scalar transport, flux evaluation, boundary handling, and conservation checks before adding more complex physics.",
+  },
+  {
+    phase: "02",
+    title: "adaptive infrastructure",
+    description:
+      "Use AMR workflows to put resolution where the flow demands it, while keeping diagnostics clear enough to trust the result.",
+  },
+  {
+    phase: "03",
+    title: "propulsion relevance",
+    description:
+      "Extend toward compressible-flow and gas-turbine-relevant cases, with a long-term path toward combustion and multiphase behavior.",
+  },
+];
+
+const outputs = [
+  {
+    label: "code",
+    value: "solver components",
+  },
+  {
+    label: "evidence",
+    value: "verification plots",
+  },
+  {
+    label: "workflow",
+    value: "ParaView analysis",
+  },
+];
 ---
 
 <BaseLayout
@@ -10,8 +55,8 @@ import PageIntro from "../components/page-intro.astro";
 >
   <PageIntro
     eyebrow="research / computational physics"
-    title="modeling messy flow physics without pretending the world is polite."
-    description="my research interests sit at the intersection of numerical methods, computational fluid dynamics, propulsion, combustion, and adaptive simulation."
+    title="adaptive methods for aerospace flow."
+    description="My research direction centers on numerical methods, computational fluid dynamics, adaptive simulation, and propulsion-relevant modeling."
   />
 
   <section class="research-layout">
@@ -20,63 +65,46 @@ import PageIntro from "../components/page-intro.astro";
       <h2>adaptive cfd solver development</h2>
 
       <p>
-        my current direction is focused on building toward higher-fidelity cfd tools
-        that can handle more realistic aerospace and propulsion problems. the goal is
-        to move beyond clean academic examples and toward simulations that can support
-        complex flow behavior, non-ideal assumptions, and eventually combustion-relevant
-        physics.
+        My current work is building toward higher-fidelity CFD tools for aerospace
+        and propulsion problems. The near-term emphasis is a reliable numerical
+        foundation: conservative updates, boundary behavior, refinement studies,
+        and verification workflows that make results easier to trust.
       </p>
 
       <p>
-        the foundation is numerical method development: finite-volume discretization,
-        advection schemes, conservation diagnostics, grid refinement, and verification
-        workflows. from there, the long-term path points toward navier-stokes,
-        turbulence modeling, multiphase effects, evaporation, and gas-turbine-relevant
-        applications.
+        From that base, the longer path points toward Navier-Stokes simulation,
+        turbulence modeling, combustion, evaporation, multiphase effects, and
+        gas-turbine-relevant applications.
       </p>
     </article>
 
     <aside class="surface-panel side-panel">
-      <p class="eyebrow">research stack</p>
+      <p class="eyebrow">method stack</p>
 
       <ul class="tag-list">
-        <li>c++</li>
-        <li>python</li>
-        <li>amrex</li>
-        <li>paraview</li>
-        <li>finite volume</li>
-        <li>adaptive mesh refinement</li>
-        <li>numerical verification</li>
+        {methods.map((method) => (
+          <li>{method}</li>
+        ))}
       </ul>
     </aside>
   </section>
 
+  <section class="research-output-strip" aria-label="research outputs">
+    {outputs.map((item) => (
+      <div>
+        <span>{item.label}</span>
+        <strong>{item.value}</strong>
+      </div>
+    ))}
+  </section>
+
   <section class="timeline-list">
-    <article class="surface-panel resume-entry">
-      <p class="eyebrow">01 / solver foundations</p>
-      <h2>advection and conservation</h2>
-      <p>
-        building the base layer for scalar transport, flux evaluation, periodic boundaries,
-        mass conservation checks, and grid refinement studies.
-      </p>
-    </article>
-
-    <article class="surface-panel resume-entry">
-      <p class="eyebrow">02 / amr infrastructure</p>
-      <h2>adaptive mesh refinement</h2>
-      <p>
-        integrating amr concepts to resolve important flow features efficiently instead
-        of spending compute everywhere like a caveman with a cluster allocation.
-      </p>
-    </article>
-
-    <article class="surface-panel resume-entry">
-      <p class="eyebrow">03 / propulsion relevance</p>
-      <h2>combustion and gas-turbine flows</h2>
-      <p>
-        long-term interest in applying high-fidelity flow models to fuel injection,
-        evaporation, combustion, and turbine-engine-relevant physics.
-      </p>
-    </article>
+    {milestones.map((item) => (
+      <article class="surface-panel resume-entry research-step">
+        <p class="eyebrow">{item.phase} / milestone</p>
+        <h2>{item.title}</h2>
+        <p>{item.description}</p>
+      </article>
+    ))}
   </section>
 </BaseLayout>
