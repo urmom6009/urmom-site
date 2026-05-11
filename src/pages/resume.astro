@@ -1,0 +1,819 @@
+---
+const links = [
+  { label: "email", href: "mailto:colinvargas03@gmail.com" },
+  { label: "github", href: "https://github.com/urmom6009" },
+  { label: "linkedin", href: "https://linkedin.com/in/colin-vargas" },
+  { label: "pdf resume", href: "/resume.pdf" },
+];
+
+const experience = [
+  {
+    role: "m.s. aerospace engineering",
+    org: "arizona state university",
+    meta: "computational cfd · numerical methods · propulsion",
+    body:
+      "graduate research focused on adaptive numerical methods, finite-volume solvers, and high-fidelity simulation workflows for aerospace applications.",
+  },
+  {
+    role: "instructional assistant / grader",
+    org: "mae 384 · advanced mathematical methods for engineers",
+    meta: "numerical methods · linear algebra · technical communication",
+    body:
+      "support student learning through grading, review materials, debugging numerical workflows, and translating abstract math into usable engineering tools.",
+  },
+  {
+    role: "rock wall supervisor",
+    org: "life time",
+    meta: "operations · safety · leadership",
+    body:
+      "manage climbing-wall operations, staff coordination, risk awareness, guest experience, and the daily miracle of keeping people attached to ropes.",
+  },
+];
+
+const projects = [
+  {
+    title: "amrex finite-volume solver",
+    status: "thesis",
+    body:
+      "developing a block-structured adaptive mesh refinement solver with finite-volume methods, verification diagnostics, and a path toward compressible-flow capability.",
+  },
+  {
+    title: "urmom.systems infrastructure",
+    status: "live",
+    body:
+      "personal infrastructure stack using cloudflare, linux services, uptime monitoring, tunnels, backups, and public/private system boundaries.",
+  },
+  {
+    title: "technical notes library",
+    status: "building",
+    body:
+      "clean writeups on numerical methods, infrastructure, cfd, debugging, and the many small technical disasters that become knowledge after enough suffering.",
+  },
+];
+
+const skillGroups = [
+  {
+    label: "numerical methods",
+    items: ["finite volume", "linear algebra", "verification", "amr", "cfd"],
+  },
+  {
+    label: "software",
+    items: ["c++", "python", "astro", "linux", "git", "cmake"],
+  },
+  {
+    label: "tools",
+    items: ["amrex", "paraview", "matlab", "cloudflare", "docker", "uptime kuma"],
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>resume | urmom.systems</title>
+    <meta
+      name="description"
+      content="digital resume for colin vargas, aerospace engineering graduate student focused on computational cfd, numerical methods, and infrastructure."
+    />
+
+    <script is:inline>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem("theme");
+          const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+          const theme = savedTheme || (prefersLight ? "light" : "dark");
+          document.documentElement.dataset.theme = theme;
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div class="page-shell">
+      <div class="background-glow"></div>
+      <div class="grid-overlay"></div>
+
+      <header class="site-header">
+        <a class="brand" href="/">urmom.systems</a>
+
+        <nav aria-label="primary navigation">
+          <a href="/projects">projects</a>
+          <a href="/research">research</a>
+          <a href="/systems">systems</a>
+          <a href="/writing">writing</a>
+          <a class="active" href="/resume">resume</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="resume-hero">
+          <p class="eyebrow">colin vargas | aerospace engineering</p>
+
+          <div class="hero-grid">
+            <div>
+              <h1>computational aerospace, infrastructure, and systems that survive reality.</h1>
+
+              <p class="lede">
+                i build numerical tools, technical infrastructure, and engineering workflows
+                across cfd, adaptive methods, linux systems, and applied problem-solving.
+              </p>
+            </div>
+
+            <aside class="identity-card">
+              <p class="card-label">current focus</p>
+              <h2>m.s. aerospace engineering</h2>
+              <p>
+                computational cfd, finite-volume methods, adaptive mesh refinement,
+                propulsion systems, and practical infrastructure.
+              </p>
+
+              <div class="link-stack">
+                {links.map((link) => <a href={link.href}>{link.label}</a>)}
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="resume-section split">
+          <div class="section-heading">
+            <p class="section-label pink">profile</p>
+            <h2>what i’m good at</h2>
+          </div>
+
+          <div class="section-body">
+            <p class="large-copy">
+              i sit at the intersection of aerospace engineering, numerical methods,
+              and practical computing. my work is centered around building tools that
+              make complex physical systems easier to model, inspect, verify, and explain.
+            </p>
+
+            <p>
+              my current direction is high-fidelity simulation infrastructure: adaptive
+              finite-volume methods, cfd workflows, solver verification, and the systems
+              needed to run, monitor, and document the work without everything collapsing
+              into a pile of mysterious shell commands.
+            </p>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <div class="section-heading">
+            <p class="section-label blue">experience</p>
+            <h2>roles & background</h2>
+          </div>
+
+          <div class="timeline">
+            {
+              experience.map((item) => (
+                <article class="timeline-item">
+                  <div>
+                    <h3>{item.role}</h3>
+                    <p class="org">{item.org}</p>
+                  </div>
+
+                  <p class="meta">{item.meta}</p>
+                  <p>{item.body}</p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <div class="section-heading">
+            <p class="section-label purple">selected work</p>
+            <h2>projects worth opening</h2>
+          </div>
+
+          <div class="project-grid">
+            {
+              projects.map((project) => (
+                <article class="project-card">
+                  <div class="project-topline">
+                    <h3>{project.title}</h3>
+                    <span>{project.status}</span>
+                  </div>
+
+                  <p>{project.body}</p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="resume-section split">
+          <div class="section-heading">
+            <p class="section-label green">skills</p>
+            <h2>toolbox</h2>
+          </div>
+
+          <div class="skill-grid">
+            {
+              skillGroups.map((group) => (
+                <div class="skill-group">
+                  <h3>{group.label}</h3>
+
+                  <div class="chips">
+                    {group.items.map((item) => <span>{item}</span>)}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="cta-panel">
+          <p class="section-label pink">contact</p>
+          <h2>send me the weird technical problem.</h2>
+          <p>
+            best fit: computational engineering, aerospace simulation, numerical
+            software, infrastructure, or technical systems that need someone willing
+            to read the logs before blaming the vibes.
+          </p>
+
+          <div class="cta-actions">
+            <a class="button primary" href="mailto:you@example.com">contact me</a>
+            <a class="button secondary" href="/resume.pdf">download pdf</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const toggle = document.querySelector("[data-theme-toggle]");
+
+        toggle?.addEventListener("click", () => {
+          const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
+          root.dataset.theme = nextTheme;
+
+          try {
+            localStorage.setItem("theme", nextTheme);
+          } catch {}
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root,
+  html[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg: #050608;
+    --panel: rgba(18, 19, 24, 0.72);
+    --panel-strong: rgba(20, 21, 27, 0.9);
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text: rgba(255, 255, 255, 0.94);
+    --muted: rgba(255, 255, 255, 0.6);
+    --faint: rgba(255, 255, 255, 0.38);
+
+    --pink: #ff73b7;
+    --blue: #74b9ff;
+    --purple: #c77dff;
+    --green: #5ff2a0;
+
+    --glow-pink: rgba(255, 56, 146, 0.25);
+    --glow-blue: rgba(48, 137, 255, 0.2);
+    --glow-purple: rgba(139, 74, 255, 0.08);
+    --grid-line: rgba(255, 255, 255, 0.055);
+    --shadow: rgba(0, 0, 0, 0.3);
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
+
+    --bg: #f7f2ea;
+    --panel: rgba(255, 255, 255, 0.7);
+    --panel-strong: rgba(255, 255, 255, 0.9);
+    --border: rgba(20, 24, 32, 0.12);
+    --border-strong: rgba(20, 24, 32, 0.22);
+    --text: rgba(16, 18, 24, 0.94);
+    --muted: rgba(16, 18, 24, 0.64);
+    --faint: rgba(16, 18, 24, 0.42);
+
+    --pink: #c92f83;
+    --blue: #2266d8;
+    --purple: #7d3fc7;
+    --green: #128b58;
+
+    --glow-pink: rgba(255, 87, 170, 0.2);
+    --glow-blue: rgba(59, 130, 246, 0.16);
+    --glow-purple: rgba(125, 63, 199, 0.08);
+    --grid-line: rgba(18, 24, 38, 0.075);
+    --shadow: rgba(18, 24, 38, 0.13);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background: var(--bg);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family:
+      inter, ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
+      "segoe ui", sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .page-shell {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 3rem clamp(1.25rem, 4vw, 4rem) 4rem;
+  }
+
+  .background-glow {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background:
+      radial-gradient(circle at 22% 12%, var(--glow-pink), transparent 35rem),
+      radial-gradient(circle at 72% 8%, var(--glow-blue), transparent 36rem),
+      radial-gradient(circle at 50% 72%, var(--glow-purple), transparent 38rem),
+      var(--bg);
+  }
+
+  .grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.42;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: linear-gradient(to bottom, black, black 75%, transparent);
+  }
+
+  .page-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to bottom, transparent, var(--bg) 90%),
+      radial-gradient(circle at center, transparent 0, rgba(0, 0, 0, 0.22) 100%);
+    pointer-events: none;
+  }
+
+  .site-header,
+  main {
+    width: min(100%, 1220px);
+    margin-inline: auto;
+  }
+
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.34em;
+    color: var(--text);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  nav a {
+    position: relative;
+    transition: color 180ms ease;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: var(--text);
+  }
+
+  nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.55rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  }
+
+  main {
+    padding-top: clamp(4rem, 8vw, 7rem);
+  }
+
+  .eyebrow,
+  .section-label {
+    font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    margin: 0 0 1.25rem;
+    padding: 0.48rem 0.9rem;
+    border: 1px solid rgba(255, 115, 183, 0.36);
+    border-radius: 999px;
+    background: rgba(255, 115, 183, 0.1);
+    color: var(--pink);
+    font-size: 0.75rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: end;
+  }
+
+  h1 {
+    max-width: 860px;
+    font-size: clamp(3.3rem, 7.6vw, 7.2rem);
+    line-height: 0.92;
+    letter-spacing: -0.065em;
+    text-wrap: balance;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+  }
+
+  .lede {
+    max-width: 720px;
+    margin-top: 1.35rem;
+    color: var(--muted);
+    font-size: clamp(1rem, 1.45vw, 1.14rem);
+    line-height: 1.75;
+  }
+
+  .identity-card,
+  .resume-section,
+  .cta-panel,
+  .timeline-item,
+  .project-card,
+  .skill-group {
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
+      var(--panel);
+    box-shadow:
+      0 1rem 3rem var(--shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(18px);
+  }
+
+  .identity-card {
+    border-radius: 1.1rem;
+    padding: 1.5rem;
+  }
+
+  .card-label {
+    margin-bottom: 0.8rem;
+    color: var(--blue);
+    font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .identity-card h2 {
+    font-size: 1.25rem;
+    letter-spacing: -0.04em;
+  }
+
+  .identity-card p:not(.card-label) {
+    margin-top: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .link-stack {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+    margin-top: 1.3rem;
+  }
+
+  .link-stack a {
+    display: inline-flex;
+    justify-content: center;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition:
+      transform 180ms ease,
+      color 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease;
+  }
+
+  .link-stack a:hover {
+    transform: translateY(-2px);
+    color: var(--text);
+    border-color: var(--border-strong);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .resume-section {
+    margin-top: 1rem;
+    border-radius: 1.1rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .resume-section:first-of-type {
+    margin-top: clamp(3rem, 7vw, 5rem);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 0.55fr 1.45fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .section-label {
+    margin-bottom: 0.85rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+  }
+
+  .section-label.pink {
+    color: var(--pink);
+  }
+
+  .section-label.blue {
+    color: var(--blue);
+  }
+
+  .section-label.purple {
+    color: var(--purple);
+  }
+
+  .section-label.green {
+    color: var(--green);
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  .section-body {
+    display: grid;
+    gap: 1rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .large-copy {
+    color: var(--text);
+    font-size: clamp(1.2rem, 2.1vw, 1.75rem);
+    line-height: 1.4;
+    letter-spacing: -0.035em;
+  }
+
+  .timeline {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 0.9fr 0.7fr 1.4fr;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.25rem;
+    border-radius: 0.9rem;
+  }
+
+  .timeline-item h3,
+  .project-card h3,
+  .skill-group h3 {
+    font-size: 1.05rem;
+    letter-spacing: -0.035em;
+  }
+
+  .org,
+  .meta,
+  .timeline-item p,
+  .project-card p {
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .org {
+    margin-top: 0.35rem;
+  }
+
+  .meta {
+    font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
+    font-size: 0.82rem;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .project-card {
+    min-height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 1rem;
+    padding: 1.35rem;
+  }
+
+  .project-topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .project-topline span {
+    flex: 0 0 auto;
+    align-self: start;
+    padding: 0.28rem 0.55rem;
+    border: 1px solid rgba(255, 115, 183, 0.3);
+    border-radius: 999px;
+    color: var(--pink);
+    font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .skill-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .skill-group {
+    border-radius: 1rem;
+    padding: 1.2rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+  }
+
+  .chips span {
+    display: inline-flex;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
+    font-size: 0.78rem;
+  }
+
+  .cta-panel {
+    margin-top: 1rem;
+    border-radius: 1.1rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .cta-panel h2 {
+    max-width: 760px;
+    font-size: clamp(2.3rem, 5vw, 4.8rem);
+    line-height: 0.95;
+    letter-spacing: -0.065em;
+  }
+
+  .cta-panel p:not(.section-label) {
+    max-width: 720px;
+    margin-top: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+  }
+
+  .button {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1.35rem;
+    border-radius: 999px;
+    font-weight: 800;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease;
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+  }
+
+  .button.primary {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .button.secondary {
+    border: 1px solid var(--border-strong);
+    background: rgba(255, 255, 255, 0.045);
+    color: var(--text);
+  }
+
+  @media (max-width: 950px) {
+    .site-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    nav {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 0.2rem;
+    }
+
+    .hero-grid,
+    .split,
+    .timeline-item,
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    main {
+      padding-top: 4rem;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .page-shell {
+      padding: 1.4rem 1rem 2rem;
+    }
+
+    .brand {
+      letter-spacing: 0.22em;
+    }
+
+    nav {
+      gap: 1rem;
+      font-size: 0.82rem;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 15vw, 4.4rem);
+    }
+
+    .eyebrow {
+      font-size: 0.64rem;
+      letter-spacing: 0.18em;
+    }
+
+    .link-stack {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
