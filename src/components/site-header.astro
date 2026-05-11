@@ -1,0 +1,46 @@
+---
+const { active = "" } = Astro.props;
+
+const links = [
+  { href: "/", label: "home", key: "home" },
+  { href: "/about", label: "about", key: "about" },
+  { href: "/projects", label: "projects", key: "projects" }
+  { href: "/research", label: "research", key: "research" },
+  { href: "/systems", label: "systems", key: "systems" },
+  { href: "/contact", label: "contact", key: "contact" },
+];
+---
+
+<header class="site-header">
+  <a class="brand-lockup" href="/">
+    <span class="brand-mark">cv</span>
+    <span>
+      <strong>colin vargas</strong>
+      <small>aerospace · compute · systems</small>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="primary navigation">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          "nav-link",
+          active === link.key && "is-active",
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+
+  <div class="header-actions">
+  <a class="contact-ribbon" href="/about#contact">
+    contact
+  </a>
+
+  <button class="theme-toggle" type="button" data-theme-toggle aria-label="toggle color theme">
+    ◐
+  </button>
+  </div>
+</header>

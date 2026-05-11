@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/base.astro";
+import PageIntro from "../components/page-intro.astro";
+import HeadshotCard from "../components/headshot-card.astro";
+---
+
+<BaseLayout
+  title="about · colin vargas"
+  description="about colin vargas, aerospace engineering graduate student and computational systems builder."
+  active="about"
+>
+  <PageIntro
+    eyebrow="about / identity layer"
+    title="engineering tastefully suspicious systems."
+    description="i work somewhere between aerospace engineering, numerical methods, propulsion, and the part of computing where a server starts screaming at 3:17 a.m. for reasons known only to god and systemd."
+  />
+
+  <section class="about-grid">
+    <div class="about-copy surface-panel">
+      <p>
+        i’m colin vargas, an aerospace engineering master’s student at asu with a
+        focus on computational fluid dynamics, numerical methods, and propulsion.
+        my long-term interest is building simulation tools that can handle messy,
+        non-ideal physics without pretending the universe is a clean textbook problem.
+      </p>
+
+      <p>
+        right now, that means growing from foundational finite-volume and advection
+        solvers toward higher-order, amr-capable navier-stokes work, with an eye
+        toward combustion, evaporation, multiphase behavior, and gas-turbine-relevant
+        flows.
+      </p>
+
+      <p>
+        outside the formal research lane, i’m building out personal infrastructure
+        under <strong>urmom.systems</strong>: status pages, dashboards, monitoring,
+        automation, and public-facing systems that look polished while quietly doing
+        useful work. civilization was apparently not going to organize itself.
+      </p>
+    </div>
+
+    <HeadshotCard />
+  </section>
+
+  <section id="contact" class="surface-panel contact-band">
+  <div>
+    <p class="eyebrow">contact</p>
+    <h2>send the packet.</h2>
+    <p>
+      for research, engineering, teaching, infrastructure, or professional opportunities,
+      email is the cleanest route.
+    </p>
+  </div>
+
+  <div class="contact-actions">
+    <a class="button primary" href="mailto:your-email@example.com">
+      email me
+    </a>
+
+    <a class="button ghost" href="https://github.com/urmom6009">
+      github
+    </a>
+
+    <a class="button ghost" href="https://www.linkedin.com/in/your-linkedin">
+      linkedin
+    </a>
+  </div>
+  </section>
+
+  <section class="continuity-strip">
+    <div>
+      <span class="eyebrow">focus</span>
+      <strong>cfd · propulsion · numerical methods</strong>
+    </div>
+
+    <div>
+      <span class="eyebrow">stack</span>
+      <strong>c++ · python · astro · linux · cloudflare</strong>
+    </div>
+
+    <div>
+      <span class="eyebrow">status</span>
+      <strong>building, unfortunately</strong>
+    </div>
+  </section>
+</BaseLayout>
+
