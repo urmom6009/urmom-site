@@ -56,17 +56,18 @@ const projects = [
         </div>
       </nav>
 
-      <section class="mb-24">
+      <section class="mb-28 pt-14 md:pt-24">
         <div class="mb-6 inline-flex rounded-full border border-pink-400/30 bg-pink-400/10 px-4 py-2 font-mono text-xs uppercase tracking-[0.25em] text-pink-300">
           colin vargas | aerospace engineering
         </div>
 
-        <h1 class="max-w-5x1 text-5x1 font-semibold tracking-tight text-white md:text-7x1">
+        <h1 class="max-w-5x1 text-5x1 font-semibold tracking-[-0.04em] text-white md:text-7x1 lg:text-8x1">
           aerospace engineering, numerical methods, and infractructure that mostly behaves.
         </h1>
 
-        <p class="mt-8 max-w-2x1 text-lg leading-8 text-zinc-400">
-          i'm building numerical tools for complex physical systems while also learning how to make infrastructure that is reliable and as ubiquitous as a certain joke.
+        <p class="mt-8 max-w-3x1 text-lg leading-8 text-zinc-400">
+          i'm building numerical tools, infrastructure, and technical systems at the intersection of aerospace engineering,
+          cfd, and a personal flair that is reliable and will stand the test of time like a certain joke.
         </p>
 
         <div class="mt-10 flex flex-wrap gap-4">
@@ -79,20 +80,20 @@ const projects = [
           
           <a
             href="/research"
-            class="rounded-full border border-white/15 bg-white/15 px-5 py-3 text-sm font-semibold text-zinc-100 transition hover:border-white/30 hover:bg-white/10"
+            class="rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-semibold text-zinc-100 transition hover:border-pink-300/50 hover:bg-white/15"
           >
-            research direction & snippets
+            research direction
           </a>
         </div>
       </section>
 
-      <section class="grid gap-8 rounded-3x1 border border-white/10 bg-zinc-900/60 p-6 md:grid-cols-[1fr_1.2fr] md:p-8">
+      <section class="mb-20 grid gap-4 md:grid-cols-3">
         {focusAreas.map((item) => (
-          <article class="rounded-3x1 border border-white/10 bg-white/[0.035] p-6 shadow-black/20 backdrop-blur">
-            <p class="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-pink-300">
+        <article class="group rounded-2x1 border border-white/10 bg-white/[0.035] p-6 transition hover:-translate-y-1 hover:border-pink-300/30 hover:bg-white/[0.06]">
+            <p class="mb-5 font-mono text-xs uppercase tracking-[0.28em] text-pink-300">
               {item.label}
             </p>
-            <h2 class="mb-3 text-2x1 font-semibold text-white">{item.title}</h2>
+            <h2 class="mb-4 text-2x1 font-semibold tracking-tight text-white">{item.title}</h2>
             <p class="leading-7 text-zinc-400">{item.text}</p>
           </article>
         ))}
@@ -125,7 +126,7 @@ const projects = [
         </div>
       </section>
 
-      <footer class="mt-20 border-t border-white/10 pt-6 font-mono text-sm text-zinc-500">
+      <footer class="mt-24 border-t border-white/10 pt-6 font-mono text-xs tracking-wide text-zinc-600">
         built by colin vargas - computational aerospace | infrastructure | suspiciously effective domain choices
       </footer>
     </main>
