@@ -16,6 +16,7 @@
 - Extended the sticky header background into a wider horizontal gradient band.
 - Softened the sticky header gradient boundaries so the band fades into the page.
 - Reduced the sticky header gap and softened the background grid while preserving diagonal texture.
+- Pulled the home hero upward so it no longer leaves a large gap below the sticky header.
 - Re-enabled the default Cloudflare adapter inspector/plugin behavior.
 - Added a `/contact` redirect to `/about#contact`.
 - Expanded shared responsive styling for the rebuilt home, systems, admin, and writing pages.
