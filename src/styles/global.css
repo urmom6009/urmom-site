@@ -74,6 +74,11 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible {
+  outline: 2px solid rgba(194, 77, 130, 0.72);
+  outline-offset: 4px;
+}
+
 .background-glow,
 .grid-overlay {
   position: fixed;
@@ -178,13 +183,16 @@ a {
   font-family: var(--font-mono);
   font-size: 0.74rem;
   white-space: nowrap;
-  transition: 160ms ease;
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
 }
 
-.nav-link:hover,
-.nav-link.is-active {
+.nav-link:hover {
   color: var(--text);
-  background: var(--surface-strong);
+  background: rgba(194, 77, 130, 0.12);
+  box-shadow: 0 0 18px rgba(194, 77, 130, 0.22);
 }
 
 .theme-toggle {
@@ -351,6 +359,15 @@ h2 {
   border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 0.78rem;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(194, 77, 130, 0.22);
 }
 
 .button.primary {
@@ -364,6 +381,10 @@ h2 {
   background: var(--surface);
 }
 
+.button.ghost:hover {
+  border-color: rgba(194, 77, 130, 0.34);
+}
+
 .text-link {
   display: inline-flex;
   align-items: center;
@@ -371,6 +392,14 @@ h2 {
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.76rem;
+  transition:
+    color 160ms ease,
+    text-shadow 160ms ease;
+}
+
+.text-link:hover {
+  color: var(--text);
+  text-shadow: 0 0 18px rgba(194, 77, 130, 0.42);
 }
 
 .home-hero {
@@ -421,11 +450,13 @@ h2 {
   background: rgba(16, 19, 27, 0.66);
   transition:
     background 220ms ease,
-    color 220ms ease;
+    color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .home-direction-band a:hover {
   background: var(--surface-strong);
+  box-shadow: inset 0 0 0 1px rgba(194, 77, 130, 0.2), 0 0 28px rgba(194, 77, 130, 0.14);
 }
 
 .home-direction-band span {
@@ -944,10 +975,11 @@ h2 {
 .nav-ribbon {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
+  width: 124px;
   min-height: 38px;
-  max-width: min(660px, calc(100vw - 280px));
-  padding: 4px;
+  max-width: min(460px, calc(100vw - 280px));
+  padding: 4px 16px 4px 14px;
   overflow: hidden;
   color: var(--text);
   border: 1px solid var(--line);
@@ -957,6 +989,59 @@ h2 {
     var(--surface);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(18px);
+  transition:
+    width 360ms cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.nav-ribbon:hover,
+.nav-ribbon:focus-within {
+  width: 430px;
+  border-color: rgba(194, 77, 130, 0.34);
+  background:
+    linear-gradient(135deg, rgba(194, 77, 130, 0.09), rgba(143, 159, 232, 0.04) 58%, transparent),
+    var(--surface-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 24px rgba(194, 77, 130, 0.14);
+}
+
+.nav-current {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-height: 30px;
+  padding: 0;
+  color: var(--text);
+  border: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: default;
+}
+
+.nav-ribbon-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  min-width: max-content;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-6px);
+  transition:
+    opacity 200ms ease 80ms,
+    transform 260ms cubic-bezier(0.19, 1, 0.22, 1) 60ms;
+}
+
+.nav-ribbon:hover .nav-ribbon-links,
+.nav-ribbon:focus-within .nav-ribbon-links {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
 .contact-ribbon {
@@ -973,13 +1058,15 @@ h2 {
   letter-spacing: 0.04em;
   transition:
     transform 160ms ease,
-    filter 160ms ease;
+    filter 160ms ease,
+    box-shadow 160ms ease;
   z-index: 2;
 }
 
 .contact-ribbon:hover {
   transform: translateY(-1px);
   filter: brightness(1.08);
+  box-shadow: 0 0 26px rgba(194, 77, 130, 0.28);
 }
 
 .research-layout {
@@ -1564,9 +1651,26 @@ h2 {
 
   .nav-ribbon {
     flex: 1 1 100%;
+    width: auto;
     max-width: calc(100vw - 40px);
+    gap: 8px;
     overflow-x: auto;
     scrollbar-width: none;
+  }
+
+  .nav-ribbon:hover,
+  .nav-ribbon:focus-within {
+    width: auto;
+  }
+
+  .nav-current {
+    padding-right: 4px;
+  }
+
+  .nav-ribbon-links {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
   }
 
   .nav-ribbon::-webkit-scrollbar {

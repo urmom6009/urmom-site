@@ -9,6 +9,7 @@
 - Recreated the private admin systems page as a layout-based control-room launchpad with `noindex` metadata.
 - Updated the main navigation to include the writing section and moved contact access to the contact ribbon.
 - Reworked the home hero, navigation ribbon, and pink/blue accent palette for a cleaner visual system.
+- Restored a restrained expanding navigation ribbon and pink hover glow for clickable links.
 - Re-enabled the default Cloudflare adapter inspector/plugin behavior.
 - Added a `/contact` redirect to `/about#contact`.
 - Expanded shared responsive styling for the rebuilt home, systems, admin, and writing pages.

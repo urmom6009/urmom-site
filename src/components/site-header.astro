@@ -13,6 +13,7 @@ const links = [
 
 const currentPage = links.find((link) => link.key === active) ?? links[0];
 const navLinks = links.filter((link) => link.key !== "contact");
+const revealLinks = navLinks.filter((link) => link.key !== currentPage.key);
 ---
 
 <header class="site-header">
@@ -26,15 +27,17 @@ const navLinks = links.filter((link) => link.key !== "contact");
 
   <div class="header-actions">
     <nav class="nav-ribbon" aria-label="primary navigation">
-      {navLinks.map((link) => (
-        <a
-          href={link.href}
-          class:list={["nav-link", { "is-active": link.key === currentPage.key }]}
-          aria-current={link.key === currentPage.key ? "page" : undefined}
-        >
-          {link.label}
-        </a>
-      ))}
+      <button class="nav-current" type="button" aria-label="show navigation links">
+        {currentPage.label}
+      </button>
+
+      <div class="nav-ribbon-links">
+        {revealLinks.map((link) => (
+          <a href={link.href} class="nav-link">
+            {link.label}
+          </a>
+        ))}
+      </div>
     </nav>
 
     <a class="contact-ribbon" href="/contact">
