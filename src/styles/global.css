@@ -102,7 +102,7 @@ a:focus-visible {
 }
 
 .background-glow {
-  opacity: 0.44;
+  opacity: 0.4;
   background:
     conic-gradient(
       from 210deg at 28% 18%,
@@ -114,7 +114,7 @@ a:focus-visible {
     ),
     repeating-linear-gradient(
       116deg,
-      rgba(255, 255, 255, 0.035) 0 1px,
+      rgba(255, 255, 255, 0.03) 0 1px,
       transparent 1px 46px
     );
   mix-blend-mode: screen;
@@ -122,7 +122,7 @@ a:focus-visible {
 }
 
 .grid-overlay {
-  opacity: 0.34;
+  opacity: 0.2;
   background-image:
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
@@ -135,7 +135,7 @@ html[data-theme="light"] .background-glow {
 }
 
 html[data-theme="light"] .grid-overlay {
-  opacity: 0.24;
+  opacity: 0.16;
 }
 
 @keyframes drift-field {
@@ -152,7 +152,7 @@ html[data-theme="light"] .grid-overlay {
   position: relative;
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 28px 0 48px;
+  padding: 24px 0 48px;
 }
 
 .site-header {
@@ -163,7 +163,7 @@ html[data-theme="light"] .grid-overlay {
   align-items: center;
   gap: 18px;
   justify-content: space-between;
-  padding: 14px 0 28px;
+  padding: 10px 0 12px;
   isolation: isolate;
 }
 
@@ -483,8 +483,8 @@ h2 {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: calc(100svh - 190px);
-  padding: 20px 0 56px;
+  min-height: calc(100svh - 130px);
+  padding: 0 0 48px;
 }
 
 .home-editorial::before {

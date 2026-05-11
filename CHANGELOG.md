@@ -15,6 +15,7 @@
 - Corrected the navigation ribbon segment geometry and made the site header sticky while scrolling.
 - Extended the sticky header background into a wider horizontal gradient band.
 - Softened the sticky header gradient boundaries so the band fades into the page.
+- Reduced the sticky header gap and softened the background grid while preserving diagonal texture.
 - Re-enabled the default Cloudflare adapter inspector/plugin behavior.
 - Added a `/contact` redirect to `/about#contact`.
 - Expanded shared responsive styling for the rebuilt home, systems, admin, and writing pages.
