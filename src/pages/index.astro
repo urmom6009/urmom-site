@@ -18,18 +18,6 @@ const directions = [
     href: "/systems",
   },
 ];
-
-const fragments = [
-  "finite volume",
-  "propulsion",
-  "AMR",
-  "status pages",
-  "linux",
-  "technical notes",
-  "verification",
-  "cloudflare",
-  "paraview",
-];
 ---
 
 <BaseLayout
@@ -52,12 +40,6 @@ const fragments = [
         <a class="button ghost" href="/projects">selected work</a>
       </div>
     </div>
-
-    <aside class="home-chaos-map" aria-label="working fragments">
-      {fragments.map((fragment, index) => (
-        <span style={`--i: ${index}`}>{fragment}</span>
-      ))}
-    </aside>
   </section>
 
   <section class="home-direction-band" aria-label="primary directions">
