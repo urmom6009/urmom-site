@@ -164,12 +164,27 @@ html[data-theme="light"] .grid-overlay {
   gap: 18px;
   justify-content: space-between;
   padding: 14px 0 28px;
-  background:
-    linear-gradient(to bottom, var(--bg) 0%, rgba(8, 9, 13, 0.86) 72%, transparent);
+  isolation: isolate;
 }
 
-html[data-theme="light"] .site-header {
+.site-header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 50%;
+  width: min(100vw, calc(100% + 220px));
+  height: 100%;
+  transform: translateX(-50%);
   background:
+    linear-gradient(90deg, transparent, var(--bg) 12%, rgba(8, 9, 13, 0.9) 50%, var(--bg) 88%, transparent),
+    linear-gradient(to bottom, var(--bg) 0%, rgba(8, 9, 13, 0.86) 72%, transparent);
+  pointer-events: none;
+}
+
+html[data-theme="light"] .site-header::before {
+  background:
+    linear-gradient(90deg, transparent, var(--bg) 12%, rgba(245, 240, 232, 0.9) 50%, var(--bg) 88%, transparent),
     linear-gradient(to bottom, var(--bg) 0%, rgba(245, 240, 232, 0.86) 72%, transparent);
 }
 
