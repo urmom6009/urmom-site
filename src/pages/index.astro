@@ -6,6 +6,8 @@ const navItems = [
   { label: "writing", href: "/writing" },
 ];
 
+const identityLink = { label: "about me", href: "/about" };
+
 const cards = [
   {
     label: "research",
@@ -60,95 +62,108 @@ const buildItems = [
   },
   {
     title: "homelab node expansions",
-    description: "more compute, more storage, more heat. because apparently that is the hobby.",
+    description:
+      "more compute, more storage, more heat. because apparently that is the hobby.",
     status: "planned",
     href: "/projects/homelab",
     tone: "blue",
     icon: "server",
   },
 ];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="description"
+      content="personal site for aerospace engineering, numerical methods, infrastructure, and technical notes."
+    />
+    <title>urmom.systems</title>
+
     <script is:inline>
       (() => {
         try {
           const savedTheme = localStorage.getItem("theme");
-          const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+          const prefersLight = window.matchMedia(
+            "(prefers-color-scheme: light)",
+          ).matches;
           const theme = savedTheme || (prefersLight ? "light" : "dark");
 
           document.documentElement.dataset.theme = theme;
         } catch {
-          document.documetnElement.dataset.theme = "dark";
+          document.documentElement.dataset.theme = "dark";
         }
-      })();
-    </script>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>urmom.systems</title>
-    <meta
-      name="description"
-      content="personal site for aerospace engineering, numerical methods, infrastructure, and technical notes."
-      />
-    <script is:inline>
-      (() => {
-        const root = document.documentElement;
-        const button = document.querySelector("[data-theme-toggle]");
-        const label = document.querySelector("[data-theme-label]");
-
-        const setTheme = (theme) => {
-          root.dataset.theme = theme;
-
-          if (label) {
-            label.textContent = theme;
-          }
-
-          if (button) {
-            button.setAttribute("aria-label", `switch to ${theme === "light" ? "dark" : "light"} mode`);
-          }
-        };
-
-        setTheme(root.dataset.theme || "dark");
-
-        button?.addEventListener("click", () => {
-          const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
-          setTheme(nextTheme);
-
-          try {
-            localStorage.setItem("theme", nextTheme);
-          } catch {}
-        });
       })();
     </script>
   </head>
 
   <body>
     <div class="page-shell">
-      <div class="background-glow"></div>
-      <div class="grid-overlay"></div>
+      <div class="background-glow" aria-hidden="true"></div>
+      <div class="grid-overlay" aria-hidden="true"></div>
+
       <header class="site-header">
         <a class="brand" href="/" aria-label="urmom.systems home">
           urmom.systems
         </a>
 
-        <nav aria-label="primary navigation">
-          {
-            navItems.map((item) => (
-              <a href={item.href}>{item.label}</a>
-            ))
-          }
-        </nav>
+        <div class="header-actions">
+          <nav aria-label="primary navigation">
+            {
+              navItems.map((item) => {
+                const itemPath = item.href.replace(/\/$/, "") || "/";
+                const isActive = currentPath === itemPath;
+
+                return (
+                  <a class={isActive ? "active" : undefined} href={item.href}>
+                    {item.label}
+                  </a>
+                );
+              })
+            }
+          </nav>
+
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="switch color theme"
+            aria-pressed="false"
+            data-theme-toggle
+          >
+            <span class="theme-toggle-icon" aria-hidden="true"></span>
+            <span data-theme-label>light mode</span>
+          </button>
+        </div>
       </header>
 
       <main>
         <section class="hero" aria-labelledby="hero-title">
-          <p class="eyebrow">colin vargas | aerospace engineering</p>
-          <h1 id="hero-title">engineering systems that mostly behave.</h1>
+          <a class="identity-ribbon" href={identityLink.href} aria-label="about colin vargas">
+            <span class="identity-ribbon-main">
+              colin vargas | aerospace engineering
+            </span>
+
+            <span class="identity-ribbon-action">
+              {identityLink.label}
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
+
+          <h1 id="hero-title" class="hero-title">
+            <span>engineering</span>
+            <span>systems that</span>
+            <span>mostly behave.</span>
+          </h1>
+
           <p class="hero-copy">
             aerospace engineering, numerical methods, and infrastructure that
-            intersect at cfd, adaptive systems, and a personal flair that is
-            reliable enough to survive contact with reality.
+            intersect at cfd, adaptive systems, and a personal flair reliable
+            enough to survive contact with reality.
           </p>
 
           <div class="hero-actions">
@@ -187,19 +202,22 @@ const buildItems = [
             <p class="section-label blue">current build queue</p>
             <h2>things worth clicking eventually</h2>
 
-            <p>ongoing projects, experiments, and infrastructure that deserve to see the light of day.</p>
+            <p>
+              ongoing projects, experiments, and infrastructure that deserve to
+              see the light of day.
+            </p>
 
             <a class="status-card" href="/systems">
               <div class="status-topline">
                 <span>
-                  <span class="live-dot"></span>
+                  <span class="live-dot" aria-hidden="true"></span>
                   public systems status
                 </span>
                 <strong>all systems nominal</strong>
               </div>
+
               <p>uptime kuma monitoring stack <span>online</span></p>
             </a>
-            
           </aside>
 
           <section class="build-list" aria-label="featured work">
@@ -209,28 +227,30 @@ const buildItems = [
                   <div class={`build-icon ${item.tone}`} aria-hidden="true">
                     {item.icon === "cube" && (
                       <svg viewBox="0 0 24 24">
-                        <path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z" />
-                        <path d="m3 7 9 5 9-5" />
-                        <path d="M12 12v10" />
-                        <path d="m7.5 4.5 9 5" />
-                        <path d="m16.5 4.5-9 5" />
+                        <path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z"></path>
+                        <path d="m3 7 9 5 9-5"></path>
+                        <path d="M12 12v10"></path>
+                        <path d="m7.5 4.5 9 5"></path>
+                        <path d="m16.5 4.5-9 5"></path>
                       </svg>
                     )}
 
                     {item.icon === "cloud" && (
                       <svg viewBox="0 0 24 24">
-                        <path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.15 8.4 4.75 4.75 0 0 0 7 18Z" />
+                        <path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.15 8.4 4.75 4.75 0 0 0 7 18Z"></path>
                       </svg>
                     )}
 
                     {item.icon === "server" && (
                       <svg viewBox="0 0 24 24">
-                        <rect x="4" y="4" width="16" height="6" rx="1.5" />
-                        <rect x="4" y="14" width="16" height="6" rx="1.5" />
-                        <path d="M8 7h.01" />
-                        <path d="M8 17h.01" />
-                        <path d="M12 7h6" />
-                        <path d="M12 17h6" />
+                        <rect x="4" y="4" width="16" height="6" rx="1.5"
+                        ></rect>
+                        <rect x="4" y="14" width="16" height="6" rx="1.5"
+                        ></rect>
+                        <path d="M8 7h.01"></path>
+                        <path d="M8 17h.01"></path>
+                        <path d="M12 7h6"></path>
+                        <path d="M12 17h6"></path>
                       </svg>
                     )}
                   </div>
@@ -253,74 +273,120 @@ const buildItems = [
         </section>
       </main>
     </div>
+
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const button = document.querySelector("[data-theme-toggle]");
+        const label = document.querySelector("[data-theme-label]");
+
+        const setTheme = (theme) => {
+          const nextTheme = theme === "light" ? "dark" : "light";
+
+          root.dataset.theme = theme;
+
+          if (label) {
+            label.textContent = `${nextTheme} mode`;
+          }
+
+          if (button) {
+            button.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+            button.setAttribute("aria-label", `switch to ${nextTheme} mode`);
+          }
+        };
+
+        setTheme(root.dataset.theme || "dark");
+
+        button?.addEventListener("click", () => {
+          const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
+          setTheme(nextTheme);
+
+          try {
+            localStorage.setItem("theme", nextTheme);
+          } catch {}
+        });
+      })();
+    </script>
   </body>
 </html>
 
 <style is:global>
   :root,
-html[data-theme="dark"] {
-  color-scheme: dark;
+  html[data-theme="dark"] {
+    color-scheme: dark;
 
-  --bg: #050608;
-  --panel: rgba(18, 19, 24, 0.72);
-  --panel-strong: rgba(20, 21, 27, 0.9);
-  --border: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --text: rgba(255, 255, 255, 0.94);
-  --muted: rgba(255, 255, 255, 0.58);
-  --faint: rgba(255, 255, 255, 0.36);
+    --bg: #050608;
+    --panel: rgba(18, 19, 24, 0.72);
+    --panel-hover: rgba(21, 23, 30, 0.84);
+    --panel-soft: rgba(255, 255, 255, 0.035);
+    --panel-soft-hover: rgba(255, 255, 255, 0.055);
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --text: rgba(255, 255, 255, 0.94);
+    --muted: rgba(255, 255, 255, 0.62);
+    --faint: rgba(255, 255, 255, 0.38);
 
-  --pink: #ff73b7;
-  --blue: #74b9ff;
-  --purple: #c77dff;
-  --green: #5ff2a0;
+    --pink: #ff73b7;
+    --blue: #74b9ff;
+    --purple: #c77dff;
+    --green: #5ff2a0;
 
-  --glow-pink: rgba(255, 56, 146, 0.28);
-  --glow-blue: rgba(48, 137, 255, 0.22);
-  --glow-purple: rgba(139, 74, 255, 0.08);
-  --grid-line: rgba(255, 255, 255, 0.055);
-  --vignette: rgba(0, 0, 0, 0.44);
+    --glow-pink: rgba(255, 56, 146, 0.28);
+    --glow-blue: rgba(48, 137, 255, 0.22);
+    --glow-purple: rgba(139, 74, 255, 0.08);
+    --grid-line: rgba(255, 255, 255, 0.055);
+    --vignette: rgba(0, 0, 0, 0.44);
 
-  --button-primary-bg: #ffffff;
-  --button-primary-text: #08090d;
-  --shadow: rgba(0, 0, 0, 0.26);
-  --theme-icon-glow: rgba(255, 255, 255, 0.45);
-}
+    --button-primary-bg: #ffffff;
+    --button-primary-text: #08090d;
+    --button-secondary-bg: rgba(255, 255, 255, 0.045);
+    --button-secondary-bg-hover: rgba(255, 255, 255, 0.075);
+    --shadow: rgba(0, 0, 0, 0.26);
+    --inset-highlight: rgba(255, 255, 255, 0.04);
+    --theme-icon-glow: rgba(255, 255, 255, 0.42);
+  }
 
-html[data-theme="light"] {
-  color-scheme: light;
+  html[data-theme="light"] {
+    color-scheme: light;
 
-  --bg: #f7f2ea;
-  --panel: rgba(255, 255, 255, 0.66);
-  --panel-strong: rgba(255, 255, 255, 0.88);
-  --border: rgba(20, 24, 32, 0.12);
-  --border-strong: rgba(20, 24, 32, 0.2);
-  --text: rgba(16, 18, 24, 0.94);
-  --muted: rgba(16, 18, 24, 0.62);
-  --faint: rgba(16, 18, 24, 0.42);
+    --bg: #f7f2ea;
+    --panel: rgba(255, 255, 255, 0.7);
+    --panel-hover: rgba(255, 255, 255, 0.86);
+    --panel-soft: rgba(255, 255, 255, 0.45);
+    --panel-soft-hover: rgba(255, 255, 255, 0.68);
+    --border: rgba(20, 24, 32, 0.12);
+    --border-strong: rgba(20, 24, 32, 0.22);
+    --text: rgba(16, 18, 24, 0.94);
+    --muted: rgba(16, 18, 24, 0.64);
+    --faint: rgba(16, 18, 24, 0.42);
 
-  --pink: #c92f83;
-  --blue: #2266d8;
-  --purple: #7d3fc7;
-  --green: #128b58;
+    --pink: #c92f83;
+    --blue: #2266d8;
+    --purple: #7d3fc7;
+    --green: #128b58;
 
-  --glow-pink: rgba(255, 87, 170, 0.22);
-  --glow-blue: rgba(59, 130, 246, 0.18);
-  --glow-purple: rgba(125, 63, 199, 0.08);
-  --grid-line: rgba(18, 24, 38, 0.075);
-  --vignette: rgba(255, 255, 255, 0.28);
+    --glow-pink: rgba(255, 87, 170, 0.22);
+    --glow-blue: rgba(59, 130, 246, 0.18);
+    --glow-purple: rgba(125, 63, 199, 0.08);
+    --grid-line: rgba(18, 24, 38, 0.075);
+    --vignette: rgba(255, 255, 255, 0.28);
 
-  --button-primary-bg: #111318;
-  --button-primary-text: #ffffff;
-  --shadow: rgba(18, 24, 38, 0.13);
-  --theme-icon-glow: rgba(201, 47, 131, 0.35);
-}
+    --button-primary-bg: #111318;
+    --button-primary-text: #ffffff;
+    --button-secondary-bg: rgba(17, 19, 24, 0.045);
+    --button-secondary-bg-hover: rgba(17, 19, 24, 0.075);
+    --shadow: rgba(18, 24, 38, 0.13);
+    --inset-highlight: rgba(255, 255, 255, 0.75);
+    --theme-icon-glow: rgba(201, 47, 131, 0.35);
+  }
+
   * {
     box-sizing: border-box;
   }
 
   html {
     background: var(--bg);
+    scroll-behavior: smooth;
   }
 
   body {
@@ -331,11 +397,17 @@ html[data-theme="light"] {
     font-family:
       Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
       "Segoe UI", sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
 
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  button {
+    font: inherit;
   }
 
   .page-shell {
@@ -347,38 +419,38 @@ html[data-theme="light"] {
   }
 
   .background-glow {
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  background:
-    radial-gradient(circle at 24% 18%, var(--glow-pink), transparent 34rem),
-    radial-gradient(circle at 68% 12%, var(--glow-blue), transparent 36rem),
-    radial-gradient(circle at 50% 70%, var(--glow-purple), transparent 36rem),
-    var(--bg);
-}
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background:
+      radial-gradient(circle at 24% 18%, var(--glow-pink), transparent 34rem),
+      radial-gradient(circle at 68% 12%, var(--glow-blue), transparent 36rem),
+      radial-gradient(circle at 50% 70%, var(--glow-purple), transparent 36rem),
+      var(--bg);
+  }
 
   .grid-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  opacity: 0.42;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 4rem 4rem;
-  mask-image: linear-gradient(to bottom, black, black 70%, transparent);
-}
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.42;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: linear-gradient(to bottom, black, black 70%, transparent);
+  }
 
- .page-shell::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(to bottom, transparent, var(--bg) 92%),
-    radial-gradient(circle at center, transparent 0, var(--vignette) 100%);
-  pointer-events: none;
-}
+  .page-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to bottom, transparent, var(--bg) 92%),
+      radial-gradient(circle at center, transparent 0, var(--vignette) 100%);
+    pointer-events: none;
+  }
 
   .site-header,
   main {
@@ -396,60 +468,26 @@ html[data-theme="light"] {
   }
 
   .brand {
+    color: var(--text);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.95rem;
     letter-spacing: 0.34em;
-    color: rgba(255, 255, 255, 0.9);
+    opacity: 0.92;
   }
 
   .header-actions {
-  display: flex;
-  align-items: center;
-  gap: clamp(1rem, 2.5vw, 2rem);
-}
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+  }
 
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: 2.2rem;
-  padding: 0.35rem 0.72rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.045);
-  color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.78rem;
-  text-transform: lowercase;
-  cursor: pointer;
-  transition:
-    color 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease,
-    transform 180ms ease;
-}
-
-.theme-toggle:hover {
-  color: var(--text);
-  border-color: var(--border-strong);
-  background: rgba(255, 255, 255, 0.075);
-  transform: translateY(-1px);
-}
-
-.theme-toggle-icon {
-  width: 0.62rem;
-  height: 0.62rem;
-  border-radius: 999px;
-  background: var(--text);
-  box-shadow: 0 0 1rem var(--theme-icon-glow);
-}
   nav {
     display: flex;
     align-items: center;
     gap: clamp(1rem, 2.5vw, 2rem);
+    color: var(--muted);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.9rem;
-    color: var(--muted);
   }
 
   nav a {
@@ -459,16 +497,17 @@ html[data-theme="light"] {
       opacity 180ms ease;
   }
 
-  nav a:hover {
+  nav a:hover,
+  nav a.active {
     color: var(--text);
   }
 
   nav a::after {
     content: "";
     position: absolute;
-    left: 0;
     right: 0;
     bottom: -0.55rem;
+    left: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--blue), transparent);
     opacity: 0;
@@ -478,17 +517,54 @@ html[data-theme="light"] {
       transform 180ms ease;
   }
 
-  nav a:hover::after {
+  nav a:hover::after,
+  nav a.active::after {
     opacity: 1;
     transform: scaleX(1);
   }
 
-  .hero {
-    max-width: 760px;
-    padding-block: clamp(4.5rem, 11vw, 8.5rem) clamp(2rem, 5vw, 4rem);
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.2rem;
+    padding: 0.35rem 0.72rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--button-secondary-bg);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.76rem;
+    text-transform: lowercase;
+    white-space: nowrap;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease,
+      transform 180ms ease;
   }
 
-  .eyebrow,
+  .theme-toggle:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+    background: var(--button-secondary-bg-hover);
+    transform: translateY(-1px);
+  }
+
+  .theme-toggle-icon {
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 999px;
+    background: currentColor;
+    box-shadow: 0 0 1rem var(--theme-icon-glow);
+  }
+
+  .hero {
+    max-width: 780px;
+    padding-block: clamp(4rem, 10vw, 7.5rem) clamp(2rem, 5vw, 4rem);
+  }
+
   .section-label,
   .status-badge,
   .status-topline {
@@ -497,18 +573,111 @@ html[data-theme="light"] {
     letter-spacing: 0.28em;
   }
 
-  .eyebrow {
+  .identity-ribbon {
+    --ribbon-slant: 0.78rem;
+    --main-ribbon: #8f2458;
+    --main-ribbon-deep: #6f1642;
+    --main-ribbon-edge: rgba(255, 255, 255, 0.2);
+    --action-ribbon: #451027;
+    --action-ribbon-deep: #2d0819;
+    --action-offset: 0.9rem;
+    --action-travel: -1.4rem;
+
+    position: relative;
+    z-index: 20;
     display: inline-flex;
     align-items: center;
-    max-width: 100%;
+    min-height: 2.16rem;
     margin: 0 0 1.25rem;
-    padding: 0.48rem 0.9rem;
-    border: 1px solid rgba(255, 115, 183, 0.36);
-    border-radius: 999px;
-    background: rgba(255, 115, 183, 0.1);
-    color: #ff9bc9;
-    font-size: 0.75rem;
-    box-shadow: 0 0 2rem rgba(255, 115, 183, 0.08);
+    isolation: isolate;
+    overflow: visible;
+    color: #fff;
+    filter: drop-shadow(0 0 1.35rem rgba(255, 68, 150, 0.18));
+    transition:
+      filter 220ms ease,
+      transform 220ms ease;
+  }
+
+  .identity-ribbon-main,
+  .identity-ribbon-action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.16rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .identity-ribbon-main {
+    position: relative;
+    z-index: 3;
+    padding: 0.58rem 1.15rem 0.58rem 1.35rem;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 34%),
+      linear-gradient(90deg, var(--main-ribbon), var(--main-ribbon-deep));
+    color: #fff;
+    clip-path: polygon(
+      var(--ribbon-slant) 0,
+      100% 0,
+      calc(100% - var(--ribbon-slant)) 100%,
+      0 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+      inset 0 1px 0 var(--main-ribbon-edge);
+  }
+
+  .identity-ribbon-action {
+    position: absolute;
+    top: 0;
+    left: calc(100% - var(--action-offset));
+    z-index: 1;
+    gap: 0.42rem;
+    padding: 0.58rem 1.05rem 0.58rem 1.7rem;
+    color: rgba(255, 255, 255, 0.92);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 34%),
+      linear-gradient(90deg, var(--action-ribbon), var(--action-ribbon-deep));
+    clip-path: polygon(
+      var(--ribbon-slant) 0,
+      100% 0,
+      calc(100% - var(--ribbon-slant)) 100%,
+      0 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+      0.7rem 0.8rem 1.6rem rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateX(var(--action-travel));
+    transition:
+      opacity 160ms ease,
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .identity-ribbon:hover,
+  .identity-ribbon:focus-visible {
+    filter: drop-shadow(0 0 1.85rem rgba(255, 68, 150, 0.26));
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .identity-ribbon:hover .identity-ribbon-action,
+  .identity-ribbon:focus-visible .identity-ribbon-action {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .identity-ribbon:hover .identity-ribbon-main,
+  .identity-ribbon:focus-visible .identity-ribbon-main {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 34%),
+      linear-gradient(90deg, #a12b65, var(--main-ribbon-deep));
   }
 
   h1,
@@ -518,19 +687,31 @@ html[data-theme="light"] {
     margin: 0;
   }
 
-  h1 {
-    max-width: 720px;
-    font-size: clamp(3.5rem, 9vw, 7.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.075em;
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.02em;
+    max-width: 8.5ch;
+    color: var(--text);
+    font-size: clamp(3.4rem, 8.7vw, 7.1rem);
+    font-weight: 800;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-kerning: normal;
+    letter-spacing: -0.06em;
+    line-height: 0.92;
     text-wrap: balance;
   }
 
+  .hero-title span {
+    display: block;
+  }
+
   .hero-copy {
-    max-width: 650px;
-    margin-top: 1.3rem;
-    color: rgba(255, 255, 255, 0.68);
-    font-size: clamp(1rem, 1.5vw, 1.14rem);
+    max-width: 40rem;
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: clamp(1rem, 1.45vw, 1.12rem);
     line-height: 1.75;
   }
 
@@ -548,8 +729,8 @@ html[data-theme="light"] {
     min-height: 3rem;
     padding-inline: 1.35rem;
     border-radius: 999px;
-    font-weight: 700;
     font-size: 0.92rem;
+    font-weight: 700;
     transition:
       transform 180ms ease,
       border-color 180ms ease,
@@ -561,20 +742,20 @@ html[data-theme="light"] {
   }
 
   .button.primary {
-  background: var(--button-primary-bg);
-  color: var(--button-primary-text);
-  box-shadow: 0 1rem 2rem var(--shadow);
-}
+    background: var(--button-primary-bg);
+    box-shadow: 0 1rem 2rem var(--shadow);
+    color: var(--button-primary-text);
+  }
 
   .button.secondary {
     border: 1px solid var(--border-strong);
-    background: rgba(255, 255, 255, 0.045);
-    color: rgba(255, 255, 255, 0.86);
+    background: var(--button-secondary-bg);
+    color: var(--text);
   }
 
   .button.secondary:hover {
-    border-color: rgba(255, 255, 255, 0.28);
-    background: rgba(255, 255, 255, 0.075);
+    border-color: var(--border-strong);
+    background: var(--button-secondary-bg-hover);
   }
 
   .card-grid {
@@ -588,19 +769,20 @@ html[data-theme="light"] {
   .build-list {
     border: 1px solid var(--border);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+      linear-gradient(180deg, var(--panel-soft), transparent),
       var(--panel);
-      box-shadow:
-  0 1rem 3rem var(--shadow),
-  inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow:
+      0 1rem 3rem var(--shadow),
+      inset 0 1px 0 var(--inset-highlight);
     backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
   }
 
   .feature-card {
     position: relative;
+    display: flex;
     min-height: 14.25rem;
     overflow: hidden;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 2rem;
@@ -613,11 +795,11 @@ html[data-theme="light"] {
   }
 
   .feature-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--border-strong);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent),
-      rgba(21, 23, 30, 0.82);
+      linear-gradient(180deg, var(--panel-soft-hover), transparent),
+      var(--panel-hover);
+    transform: translateY(-4px);
   }
 
   .section-label {
@@ -660,7 +842,7 @@ html[data-theme="light"] {
     display: inline-flex;
     align-items: center;
     gap: 0.65rem;
-    color: rgba(255, 255, 255, 0.58);
+    color: var(--muted);
     font-size: 0.92rem;
   }
 
@@ -687,8 +869,8 @@ html[data-theme="light"] {
   }
 
   .card-visual.flow {
-    border-radius: 50%;
     border: 1px solid rgba(255, 115, 183, 0.18);
+    border-radius: 50%;
     transform: skewX(-24deg) rotate(-8deg);
   }
 
@@ -714,8 +896,8 @@ html[data-theme="light"] {
   .card-visual.servers,
   .card-visual.notes {
     display: grid;
-    gap: 0.45rem;
     align-content: center;
+    gap: 0.45rem;
   }
 
   .card-visual.servers span {
@@ -730,9 +912,9 @@ html[data-theme="light"] {
   .card-visual.notes {
     width: 5rem;
     height: 6.4rem;
+    padding: 1rem 0.8rem;
     border: 1px solid rgba(199, 125, 255, 0.5);
     border-radius: 0.35rem;
-    padding: 1rem 0.8rem;
   }
 
   .card-visual.notes span {
@@ -762,15 +944,17 @@ html[data-theme="light"] {
     padding: 1.1rem;
     border: 1px solid var(--border);
     border-radius: 0.8rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--panel-soft);
     transition:
       transform 180ms ease,
-      border-color 180ms ease;
+      border-color 180ms ease,
+      background 180ms ease;
   }
 
   .status-card:hover {
+    border-color: rgba(95, 242, 160, 0.32);
+    background: var(--panel-soft-hover);
     transform: translateY(-2px);
-    border-color: rgba(95, 242, 160, 0.28);
   }
 
   .status-topline {
@@ -819,10 +1003,10 @@ html[data-theme="light"] {
 
   .build-item {
     display: grid;
+    min-height: 6.4rem;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 1.35rem;
-    min-height: 6.4rem;
     padding: 1rem 1.35rem;
     border-bottom: 1px solid var(--border);
     transition:
@@ -835,17 +1019,17 @@ html[data-theme="light"] {
   }
 
   .build-item:hover {
-    background: rgba(255, 255, 255, 0.045);
+    background: var(--panel-soft-hover);
   }
 
   .build-icon {
     display: grid;
-    place-items: center;
     width: 4rem;
     height: 4rem;
-    border-radius: 0.8rem;
+    place-items: center;
     border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.035);
+    border-radius: 0.8rem;
+    background: var(--panel-soft);
   }
 
   .build-icon svg {
@@ -853,27 +1037,27 @@ html[data-theme="light"] {
     height: 2rem;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
+    stroke-width: 1.5;
   }
 
   .build-icon.pink {
-    color: var(--pink);
     border-color: rgba(255, 115, 183, 0.32);
     background: rgba(255, 115, 183, 0.075);
+    color: var(--pink);
   }
 
   .build-icon.blue {
-    color: var(--blue);
     border-color: rgba(116, 185, 255, 0.32);
     background: rgba(116, 185, 255, 0.075);
+    color: var(--blue);
   }
 
   .build-icon.green {
-    color: var(--blue);
     border-color: rgba(116, 185, 255, 0.32);
     background: rgba(116, 185, 255, 0.075);
+    color: var(--blue);
   }
 
   .build-copy h3 {
@@ -904,39 +1088,40 @@ html[data-theme="light"] {
   }
 
   .status-badge.pink {
-    color: var(--pink);
     border: 1px solid rgba(255, 115, 183, 0.32);
     background: rgba(255, 115, 183, 0.08);
+    color: var(--pink);
   }
 
   .status-badge.green {
-    color: var(--green);
     border: 1px solid rgba(95, 242, 160, 0.32);
     background: rgba(95, 242, 160, 0.08);
+    color: var(--green);
   }
 
   .status-badge.blue {
-    color: var(--blue);
     border: 1px solid rgba(116, 185, 255, 0.32);
     background: rgba(116, 185, 255, 0.08);
+    color: var(--blue);
   }
 
   .chevron {
-    color: rgba(255, 255, 255, 0.48);
+    color: var(--faint);
     font-size: 2rem;
     line-height: 1;
   }
 
   @media (max-width: 950px) {
     .site-header,
-.header-actions {
-  align-items: flex-start;
-  flex-direction: column;
-}
+    .header-actions {
+      align-items: flex-start;
+      flex-direction: column;
+    }
 
-.header-actions {
-  width: 100%;
-}
+    .header-actions {
+      width: 100%;
+      gap: 0.85rem;
+    }
 
     nav {
       width: 100%;
@@ -968,13 +1153,32 @@ html[data-theme="light"] {
       font-size: 0.82rem;
     }
 
-    .eyebrow {
-      font-size: 0.64rem;
+    .identity-ribbon {
+      max-width: 100%;
+    }
+
+    .identity-ribbon-main,
+    .identity-ribbon-action {
+      min-height: 2rem;
+      font-size: 0.62rem;
       letter-spacing: 0.18em;
     }
 
-    h1 {
+    .identity-ribbon-main {
+      max-width: min(100%, 24rem);
+      overflow: hidden;
+      padding-inline: 1.05rem 0.95rem;
+      text-overflow: ellipsis;
+    }
+
+    .identity-ribbon-action {
+      padding-inline: 1.35rem 0.95rem;
+    }
+
+    .hero-title {
+      max-width: 9ch;
       font-size: clamp(3rem, 17vw, 4.4rem);
+      letter-spacing: -0.055em;
     }
 
     .hero-copy {
@@ -1001,3 +1205,4 @@ html[data-theme="light"] {
     }
   }
 </style>
+
