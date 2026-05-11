@@ -2,86 +2,198 @@
 import BaseLayout from "../layouts/base.astro";
 import PageIntro from "../components/page-intro.astro";
 import HeadshotCard from "../components/headshot-card.astro";
+
+const strengths = [
+  "computational fluid dynamics",
+  "finite-volume methods",
+  "adaptive mesh refinement",
+  "propulsion and combustion direction",
+  "linux infrastructure",
+  "technical writing",
+];
+
+const experience = [
+  {
+    role: "Aerospace engineering graduate student",
+    org: "Arizona State University",
+    date: "current",
+    points: [
+      "Focusing graduate work around numerical methods, CFD, propulsion, and high-fidelity simulation.",
+      "Building toward AMR-capable solver workflows with a practical eye for verification and post-processing.",
+      "Translating research direction into documented systems, project pages, and reusable technical notes.",
+    ],
+  },
+  {
+    role: "Computational systems builder",
+    org: "urmom.systems",
+    date: "ongoing",
+    points: [
+      "Maintaining public and private infrastructure for status pages, dashboards, service routing, and monitoring.",
+      "Using Linux, Cloudflare, Uptime Kuma, and small automation scripts to make personal systems visible and maintainable.",
+      "Treating infrastructure as a design problem: useful first, polished second, reckless never.",
+    ],
+  },
+];
+
+const skillGroups = [
+  {
+    label: "research",
+    items: ["CFD", "finite volume", "AMR", "verification", "ParaView"],
+  },
+  {
+    label: "programming",
+    items: ["C++", "Python", "Astro", "Bash", "Git"],
+  },
+  {
+    label: "systems",
+    items: ["Linux", "Docker", "Cloudflare", "Uptime Kuma", "DNS"],
+  },
+];
+
+const projectHighlights = [
+  {
+    title: "adaptive cfd solver development",
+    description:
+      "A research path toward conservative, AMR-capable solver workflows for aerospace flow problems.",
+    href: "/projects/adaptive-cfd-solver",
+  },
+  {
+    title: "urmom.systems infrastructure",
+    description:
+      "A public/private infrastructure stack for status, monitoring, routing, dashboards, and deployment visibility.",
+    href: "/projects/urmom-systems-infrastructure",
+  },
+  {
+    title: "minecraft server operations",
+    description:
+      "A practical operations project around game server hosting, backups, updates, monitoring, and access control.",
+    href: "/projects/minecraft-server-operations",
+  },
+];
 ---
 
 <BaseLayout
   title="about · colin vargas"
-  description="about colin vargas, aerospace engineering graduate student and computational systems builder."
+  description="online resume for colin vargas, aerospace engineering graduate student and computational systems builder."
   active="about"
 >
   <PageIntro
-    eyebrow="about / identity layer"
-    title="engineering tastefully suspicious systems."
-    description="i work somewhere between aerospace engineering, numerical methods, propulsion, and the part of computing where a server starts screaming at 3:17 a.m. for reasons known only to god and systemd."
+    eyebrow="about / online resume"
+    title="aerospace engineering, numerical methods, and infrastructure with a pulse."
+    description="I am an aerospace engineering graduate student focused on CFD, propulsion, numerical methods, and the practical systems work that keeps technical projects alive after the first successful run."
   />
 
-  <section class="about-grid">
+  <section class="about-grid resume-profile">
     <div class="about-copy surface-panel">
       <p>
-        i’m colin vargas, an aerospace engineering master’s student at asu with a
-        focus on computational fluid dynamics, numerical methods, and propulsion.
-        my long-term interest is building simulation tools that can handle messy,
-        non-ideal physics without pretending the universe is a clean textbook problem.
+        I’m Colin Vargas, an aerospace engineering master’s student at ASU. My
+        technical center of gravity is computational fluid dynamics, numerical
+        methods, and propulsion-relevant simulation.
       </p>
 
       <p>
-        right now, that means growing from foundational finite-volume and advection
-        solvers toward higher-order, amr-capable navier-stokes work, with an eye
-        toward combustion, evaporation, multiphase behavior, and gas-turbine-relevant
-        flows.
+        The longer-term goal is to build simulation tools that handle messy physics
+        without hiding behind toy problems: conservation, mesh refinement,
+        verification, combustion direction, and workflows that make results easier
+        to inspect and explain.
       </p>
 
       <p>
-        outside the formal research lane, i’m building out personal infrastructure
-        under <strong>urmom.systems</strong>: status pages, dashboards, monitoring,
-        automation, and public-facing systems that look polished while quietly doing
-        useful work. civilization was apparently not going to organize itself.
+        Outside the formal research lane, I build and operate personal
+        infrastructure under <strong>urmom.systems</strong>. It is part portfolio,
+        part lab bench, and part reminder that engineering taste includes knowing
+        where the logs are.
       </p>
+
+      <div class="resume-strengths" aria-label="focus areas">
+        {strengths.map((item) => (
+          <span>{item}</span>
+        ))}
+      </div>
     </div>
 
-    <HeadshotCard />
+    <HeadshotCard src="/colin-vargas-headshot.jpg" />
+  </section>
+
+  <section class="resume-snapshot">
+    {skillGroups.map((group) => (
+      <article class="surface-panel snapshot-card">
+        <p class="eyebrow">{group.label}</p>
+        <ul class="tag-list">
+          {group.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </section>
+
+  <section class="online-resume-section">
+    <div class="section-heading">
+      <p class="eyebrow">experience</p>
+      <h2>what I am doing now</h2>
+    </div>
+
+    <div class="resume-timeline">
+      {experience.map((item) => (
+        <article class="surface-panel resume-entry resume-role">
+          <div class="resume-role-topline">
+            <div>
+              <p class="eyebrow">{item.org}</p>
+              <h3>{item.role}</h3>
+            </div>
+            <span>{item.date}</span>
+          </div>
+
+          <ul>
+            {item.points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="online-resume-section">
+    <div class="section-heading">
+      <p class="eyebrow">selected work</p>
+      <h2>projects with receipts</h2>
+    </div>
+
+    <div class="resume-project-grid">
+      {projectHighlights.map((project) => (
+        <a class="surface-panel resume-project" href={project.href}>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+          <span class="text-link">open project -></span>
+        </a>
+      ))}
+    </div>
   </section>
 
   <section id="contact" class="surface-panel contact-band">
-  <div>
-    <p class="eyebrow">contact</p>
-    <h2>send the packet.</h2>
-    <p>
-      for research, engineering, teaching, infrastructure, or professional opportunities,
-      email is the cleanest route.
-    </p>
-  </div>
-
-  <div class="contact-actions">
-    <a class="button primary" href="mailto:your-email@example.com">
-      email me
-    </a>
-
-    <a class="button ghost" href="https://github.com/urmom6009">
-      github
-    </a>
-
-    <a class="button ghost" href="https://www.linkedin.com/in/your-linkedin">
-      linkedin
-    </a>
-  </div>
-  </section>
-
-  <section class="continuity-strip">
     <div>
-      <span class="eyebrow">focus</span>
-      <strong>cfd · propulsion · numerical methods</strong>
+      <p class="eyebrow">contact</p>
+      <h2>send the packet.</h2>
+      <p>
+        For research, engineering, teaching, infrastructure, or professional
+        opportunities, email is the cleanest route.
+      </p>
     </div>
 
-    <div>
-      <span class="eyebrow">stack</span>
-      <strong>c++ · python · astro · linux · cloudflare</strong>
-    </div>
+    <div class="contact-actions">
+      <a class="button primary" href="mailto:your-email@example.com">
+        email me
+      </a>
 
-    <div>
-      <span class="eyebrow">status</span>
-      <strong>building, unfortunately</strong>
+      <a class="button ghost" href="https://github.com/urmom6009">
+        github
+      </a>
+
+      <a class="button ghost" href="https://www.linkedin.com/in/your-linkedin">
+        linkedin
+      </a>
     </div>
   </section>
 </BaseLayout>
-
