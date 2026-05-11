@@ -1,17 +1,83 @@
 ---
-
+const projects = [
+  {
+  title: "computational aerospace",
+  description: "numerical methods, cfd, amr, combustion, and solver development"
+  },
+  {
+  title: "personal infrastructure",
+  description: "homelab monitoring, dns, tunnels, uptime, backup, and server experimentation"
+  },
+  {
+  title: "technical writing",
+  description: "notes on engineering, systems, and whatever else survives reality"
+  }
+  ];
 ---
 
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+    <meta charset="utf-8" />
+    <meta name= "viewport" content="width=device-width" />
+    <title>colin vargas | urmom.systems</title>
+    <meta 
+      name="description"
+      content="personal site of colin vargas: aerospace engineering, numerical methods, homelab infrastructure, and technical projects."
+    />
+  </head>
+
+  <body class="min-h-screen bg-zinc-950 text-zinc-100">
+    <main class="mx-auto max-w-5x1 px-6 py-16">
+      <nav class="mb-24 flex items-center justify-between border-b border-zinc-800 pb-5">
+        <a href="/" class="font-mono text-sm tracking-wide text-zinc-300">
+          urmom.systems
+        </a>
+
+        <div class="flex gap-5 font-mono text-sm text-zinc-400">
+          <a href="/projects" class="hover:text-white">projects</a>
+          <a href="/research" class="hover:text-white">research</a>
+          <a href="/writing" class="hover:text-white">writing</a>
+        </div>
+      </nav>
+
+      <section class="mb-24">
+        <p class="mb-4 font-mono text-sm uppercase tracking-[0.3em] text-pink-400">
+          colin vargas
+        </p>
+
+        <h1 class="max-w-4x1 text-5x1 font-semibold tracking-tight text-white md:text-7x1">
+          aerosapce engineering, numerical methods, and personal infractructure
+        </h1>
+
+        <p class="mt-8 max-w-2x1 text-lg leading-8 text-zinc-400">
+          i am currently working on my masters of science and i build computational tools, study complex physical systems, and run small but serious infrastructure under a domain name that should not have worked as well as it did.
+        </p>
+
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a 
+            href="/projects"
+            class="rounded-full bg-white px-5 py-3 text-sm font-medium text-zinc-950"
+           >
+            view projects
+           </a>
+          
+          <a  
+            href="/research"
+            class="rounded-full bg-white px-5 py-3 text-sm font-medium text-zinc-950"
+          >
+            research notes
+          </a>
+        </div>
+      </section>
+
+      <section class="grid gap-4 md:grid-cols-3">
+        {projects.map((project) => (
+          <article class="rounded-2x1 border border-zinc-800 bg-zinc-900/50 p-6">
+            <h2 class="mb-3 text-xl font-semibold text-white">{project.title}</h2>
+            <p class="leading-7 text-zinc-400">{project.description}</p>
+          </article>
+          ))}
+      </section>
+    </main>
+  </body>
 </html>
