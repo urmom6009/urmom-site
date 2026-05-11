@@ -12,6 +12,7 @@
 - Restored a restrained expanding navigation ribbon and pink hover glow for clickable links.
 - Recut the navigation controls into clipped ribbon shapes matching the site mark.
 - Tightened the navigation/contact ribbon join, restored the simpler light-mode background, and sharpened the home hero accents.
+- Corrected the navigation ribbon segment geometry and made the site header sticky while scrolling.
 - Re-enabled the default Cloudflare adapter inspector/plugin behavior.
 - Added a `/contact` redirect to `/about#contact`.
 - Expanded shared responsive styling for the rebuilt home, systems, admin, and writing pages.
