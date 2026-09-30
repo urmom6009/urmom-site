@@ -6,6 +6,8 @@ Existing Astro + Cloudflare lab site. src/pages holds routes; public holds stati
 
 ## setup and validation
 
+Install: `bash .codex/setup.sh`. Validate: `bash .codex/validate.sh`. Read `.codex/README.md` for environment publication and startup instructions. These commands do not activate a cloud environment automatically.
+
 package.json requires Node >=22.12.0; use a runtime compatible with its current Astro dependency. If package-lock.json exists, use npm ci; otherwise npm install and review dependency changes. Run npm run build. npm run dev serves the Astro development environment. npm run preview builds and invokes wrangler dev; treat it as a local Cloudflare-emulation check that may need additional runtime configuration.
 
 Do not run npm run deploy during cloud environment setup or validation: it invokes wrangler deploy. Keep Cloudflare account credentials and live bindings out of cloud development. Use synthetic fixtures for any private systems data.
